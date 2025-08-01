@@ -85,6 +85,7 @@ in {
         # Animanga
         ani-cli
         manga-tui
+
       ];
     };
 
