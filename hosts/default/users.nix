@@ -40,7 +40,7 @@ in {
       ohMyZsh = {
         enable = true;
         plugins = [ "git" ];
-        theme = "agnoster";
+        theme = "robbyrussell";
       };
 
       autosuggestions.enable = true;
