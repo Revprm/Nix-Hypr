@@ -37,6 +37,7 @@ in {
     wget
     xdg-user-dirs
     xdg-utils
+    zip
 
     fastfetch
     (mpv.override { scripts = [ mpvScripts.mpris ]; }) # with tray
