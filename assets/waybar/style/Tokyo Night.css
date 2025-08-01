@@ -1,0 +1,225 @@
+/* ---- 💫 https://github.com/JaKooLit 💫 ---- */
+/* Vertical/Horizontal Tokyo Night (Improved) */
+/* Adapted from a vertical Catppuccin Mocha base */
+/* Universal version by Gemini */
+
+* {
+    font-family: "JetBrainsMono Nerd Font";
+    font-weight: bold;
+    min-height: 0;
+    /* set font-size to 100% if font scaling is set to 1.00 using nwg-look */
+    font-size: 97%;
+    font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
+}
+
+window#waybar {
+    background-color: #1a1b26; /* Base */
+    border-radius: 15px; /* Adjust this for horizontal bars if it looks too rounded. e.g., 10px */
+    transition: background-color 0.3s ease;
+}
+
+tooltip {
+    background: #1a1b26; /* Base */
+    opacity: 1;
+    border-radius: 15px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #7aa2f7; /* Sapphire/Blue */
+}
+
+tooltip label {
+    color: #7aa2f7; /* Blue */
+}
+
+#taskbar button,
+#workspaces button {
+    color: #565f89; /* Surface2 */
+    background-color: transparent;
+    /* For horizontal bars, you might prefer more horizontal padding, e.g., padding: 2px 8px; */
+    padding: 4px 5px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+#taskbar button.active,
+#workspaces button.active {
+    color: #f7768e; /* Maroon/Red */
+}
+
+#taskbar button.focused,
+#workspaces button.focused {
+    color: #bb9af7; /* Rosewater/Magenta */
+    background: transparent;
+    border-radius: 15px;
+}
+
+#workspaces button.urgent {
+    color: #f7768e; /* Red */
+    background: transparent;
+    border-radius: 15px;
+}
+
+#taskbar button:hover,
+#workspaces button:hover {
+    background: transparent;
+    color: #ff9e64; /* Flamingo/Orange */
+    border-radius: 15px;
+}
+
+#backlight,
+#backlight-slider,
+#battery,
+#bluetooth,
+#clock,
+#cpu,
+#disk,
+#idle_inhibitor,
+#keyboard-state,
+#memory,
+#mode,
+#mpris,
+#network,
+#power-profiles-daemon,
+#pulseaudio,
+#pulseaudio-slider,
+#taskbar button,
+#taskbar,
+#temperature,
+#tray,
+#window,
+#wireplumber,
+#workspaces,
+#custom-backlight,
+#custom-browser,
+#custom-cava_mviz,
+#custom-cycle_wall,
+#custom-dot_update,
+#custom-file_manager,
+#custom-keybinds,
+#custom-keyboard,
+#custom-light_dark,
+#custom-lock,
+#custom-hint,
+#custom-hypridle,
+#custom-menu,
+#custom-playerctl,
+#custom-power_vertical,
+#custom-power,
+#custom-quit,
+#custom-reboot,
+#custom-settings,
+#custom-spotify,
+#custom-swaync,
+#custom-tty,
+#custom-updater,
+#custom-hyprpicker,
+#custom-weather,
+#custom-weather.clearNight,
+#custom-weather.cloudyFoggyDay,
+#custom-weather.cloudyFoggyNight,
+#custom-weather.default, 
+#custom-weather.rainyDay,
+#custom-weather.rainyNight,
+#custom-weather.severe,
+#custom-weather.showyIcyDay,
+#custom-weather.snowyIcyNight,
+#custom-weather.sunnyDay {
+    opacity: 1;
+    /* For horizontal bars, you might prefer different padding, e.g., padding: 2px 8px; */
+    padding: 4px 6px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+#idle_inhibitor {
+    color: #bb9af7; /* Pink/Magenta */
+}
+
+#mpris {
+    color: #bb9af7; /* Rosewater/Magenta */
+}
+
+#battery {
+    color: #9ece6a; /* Green */
+}
+
+@keyframes blink {
+    to {
+        background-color: #c0caf5; /* White-ish text */
+        color: #1a1b26; /* Black-ish background */
+    }
+}
+
+#battery.critical:not(.charging) {
+    color: #f7768e; /* Red */
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#custom-lock,
+#custom-power {
+    color: #f7768e; /* Red */
+    border-radius: 15px;
+    font-weight: bolder;
+}
+
+#network {
+    background-color: transparent;
+    color: #bb9af7; /* Mauve/Magenta */
+}
+
+#backlight {
+    color: #ff9e64; /* Flamingo/Orange */
+}
+
+#custom-weather {
+    color: #9ece6a; /* Green */
+    border-radius: 15px;
+    background-color: transparent;
+}
+
+#custom-menu {
+    color: #7aa2f7; /* Blue */
+}
+
+#pulseaudio {
+    background-color: transparent;
+    color: #7aa2f7; /* Blue */
+}
+
+#clock,
+#clock-calender {
+    color: #7aa2f7; /* Sapphire/Blue */
+}
+
+
+/* ---- SLIDER STYLES ---- */
+/* CHOOSE ONE SECTION AND COMMENT OUT THE OTHER */
+
+#backlight-slider slider,
+#pulseaudio-slider slider {
+    min-height: 7px;
+    min-width: 15px; /* Adjust if handle is too wide/narrow */
+    opacity: 0;
+    background-color: #a9b1d6; /* Text */
+    border-radius: 3px;
+    box-shadow: 1px 5px 6px 1px #16161e; /* Darker shadow */
+}
+
+/* === SECTION 2: HORIZONTAL SLIDER === */
+/* UNCOMMENT this section and COMMENT OUT Section 1 for a horizontal bar */
+#backlight-slider trough,
+#pulseaudio-slider trough {
+    min-width: 100px;
+    min-height: 7px;
+    border-radius: 5px;
+    background-color: #24283b; 
+}
+
+#backlight-slider highlight,
+#pulseaudio-slider highlight {
+    min-height: 5px; 
+    border-radius: 5px;
+    background-color: #7aa2f7; 
+}
