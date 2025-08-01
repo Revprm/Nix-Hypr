@@ -34,6 +34,7 @@ in {
         htop
         obs-studio
         postman
+        spicetify-cli
 
         # NodeJS
         nodejs
