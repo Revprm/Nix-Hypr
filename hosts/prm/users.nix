@@ -3,7 +3,7 @@
 
 { pkgs, username, ... }:
 
-let inherit (import ./variables.nix) gitUsername;
+let inherit (import ./variables.nix) gitUsername gitEmail;
 in {
   users = {
     mutableUsers = true;
@@ -35,6 +35,7 @@ in {
         obs-studio
         postman
         spicetify-cli
+        gh
 
         # NodeJS
         nodejs
@@ -61,9 +62,6 @@ in {
         go
         gopls
         delve
-
-        # CI/CD
-        gh
 
         # Gaming
         steam
@@ -103,6 +101,8 @@ in {
   environment.systemPackages = with pkgs; [ lsd fzf ];
 
   programs = {
+
+    gh = { enable = true; };
     # Zsh configuration
     zsh = {
       enable = true;
