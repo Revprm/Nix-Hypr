@@ -91,6 +91,8 @@ in {
         ani-cli
         manga-tui
 
+        # Social
+        zapzap
       ];
     };
 
