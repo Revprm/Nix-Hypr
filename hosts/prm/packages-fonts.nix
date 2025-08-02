@@ -35,6 +35,7 @@ in {
     glib # for gsettings to work
     gsettings-qt
     git
+    gh
     killall
     libappindicator
     libnotify
