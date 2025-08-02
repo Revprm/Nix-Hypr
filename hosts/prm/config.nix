@@ -340,8 +340,6 @@ in {
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     QML_IMPORT_PATH = "${pkgs.hyprland-qt-support}/lib/qt-6/qml";
-    XCURSOR_THEME = "Bibata-Modern-Ice";
-    XCURSOR_SIZE = "24";
   };
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

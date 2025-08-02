@@ -25,18 +25,20 @@
     
 "modules-left": [
 	"custom/menu",
+	"custom/cava_mviz",
 	"custom/separator#blank_2",
 	"group/motherboard",
     ],
     
 "modules-center": [
   	//"hyprland/window",
- 	"hyprland/workspaces#pacman",
+ 	"hyprland/workspaces#kanji",
 	],
     
 "modules-right": [
   	"network",
   	"bluetooth",
+	"battery",
 	"custom/weather",
 	"custom/separator#blank_2",
 	"group/audio",
@@ -78,8 +80,7 @@
 "modules-right": [
 	"mpris",
 	"group/notify",
-    "tray",
-    "custom/light_dark",
+    	"tray",
     ],
     
 }]

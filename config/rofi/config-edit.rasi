@@ -35,7 +35,7 @@ listview {
 /* ---- Entry input ---- */
 entry {
   expand: true;
-  placeholder: " 💫  Customize KooL Hyprland  💫";
+  placeholder: "Need something to Edit?";
   horizontal-align: 0.5;
 }
 

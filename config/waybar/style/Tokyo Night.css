@@ -1,7 +1,6 @@
 /* ---- 💫 https://github.com/JaKooLit 💫 ---- */
-/* Vertical/Horizontal Tokyo Night (Improved) */
+/* Vertical Tokyo Night (Improved) */
 /* Adapted from a vertical Catppuccin Mocha base */
-/* Universal version by Gemini */
 
 * {
     font-family: "JetBrainsMono Nerd Font";
@@ -14,7 +13,7 @@
 
 window#waybar {
     background-color: #1a1b26; /* Base */
-    border-radius: 15px; /* Adjust this for horizontal bars if it looks too rounded. e.g., 10px */
+    border-radius: 15px;
     transition: background-color 0.3s ease;
 }
 
@@ -35,8 +34,7 @@ tooltip label {
 #workspaces button {
     color: #565f89; /* Surface2 */
     background-color: transparent;
-    /* For horizontal bars, you might prefer more horizontal padding, e.g., padding: 2px 8px; */
-    padding: 4px 5px;
+    padding: 4px 5px; /* Symmetrical horizontal padding for better alignment */
     transition: color 0.3s ease, background-color 0.3s ease;
 }
 
@@ -124,9 +122,8 @@ tooltip label {
 #custom-weather.snowyIcyNight,
 #custom-weather.sunnyDay {
     opacity: 1;
-    /* For horizontal bars, you might prefer different padding, e.g., padding: 2px 8px; */
-    padding: 4px 6px;
-    transition: color 0.3s ease, background-color 0.3s ease;
+    padding: 4px 6px; /* Consistent padding for all modules */
+    transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transitions for state changes */
 }
 
 #idle_inhibitor {
@@ -162,6 +159,7 @@ tooltip label {
     color: #f7768e; /* Red */
     border-radius: 15px;
     font-weight: bolder;
+    /* Removed specific padding to inherit the main module padding for consistency */
 }
 
 #network {
@@ -193,33 +191,28 @@ tooltip label {
     color: #7aa2f7; /* Sapphire/Blue */
 }
 
-
-/* ---- SLIDER STYLES ---- */
-/* CHOOSE ONE SECTION AND COMMENT OUT THE OTHER */
-
 #backlight-slider slider,
 #pulseaudio-slider slider {
     min-height: 7px;
-    min-width: 15px; /* Adjust if handle is too wide/narrow */
+    min-width: 15px;
     opacity: 0;
     background-color: #a9b1d6; /* Text */
     border-radius: 3px;
     box-shadow: 1px 5px 6px 1px #16161e; /* Darker shadow */
 }
 
-/* === SECTION 2: HORIZONTAL SLIDER === */
-/* UNCOMMENT this section and COMMENT OUT Section 1 for a horizontal bar */
 #backlight-slider trough,
 #pulseaudio-slider trough {
-    min-width: 100px;
-    min-height: 7px;
+    min-height: 100px;
+    min-width: 7px;
     border-radius: 5px;
-    background-color: #24283b; 
+    background-color: #24283b; /* Surface0 */
 }
 
 #backlight-slider highlight,
 #pulseaudio-slider highlight {
-    min-height: 5px; 
+    min-width: 5px;
     border-radius: 5px;
-    background-color: #7aa2f7; 
+    background-color: #7aa2f7; /* Blue */
 }
+
