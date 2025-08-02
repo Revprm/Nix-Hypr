@@ -91,8 +91,8 @@ curl -s https://raw.githubusercontent.com/Revprm/Nix-Hypr/master/auto-install.sh
 
 ```bash
 # Clone the repository
-git clone https://github.com/Revprm/Nix-Hypr.git ~/NixOS-Hyprland
-cd ~/NixOS-Hyprland
+git clone https://github.com/Revprm/Nix-Hypr.git ~
+cd ~/Nix-Hypr
 
 # Run the installation script
 chmod +x install.sh
