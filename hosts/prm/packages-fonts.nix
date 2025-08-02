@@ -12,7 +12,14 @@ let
 
 in {
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      packageOverrides = pkgs: {
+        steam = pkgs.steam.override { extraEnv = { GDK_SCALE = "2"; }; };
+      };
+    };
+  };
 
   environment.systemPackages = (with pkgs; [
     # System Packages
