@@ -18,8 +18,8 @@
   outputs = inputs@{ self, nixpkgs, ... }:
     let
       system = "x86_64-linux";
-      host = "prm";
-      username = "rev";
+      host = "prm"; # Change this to your hostname
+      username = "rev"; # Change this to your username
 
       pkgs = import nixpkgs {
         inherit system;
