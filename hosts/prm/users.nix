@@ -82,6 +82,10 @@ in {
         stegseek
         zsteg
         gdb
+        volatility3
+        ghidra-bin
+        cutter
+        yara
 
         # Animanga
         ani-cli
