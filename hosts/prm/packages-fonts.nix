@@ -119,7 +119,7 @@ in {
     hyprlock.enable = true;
     firefox.enable = true;
     git.enable = true;
-    gh.enable = true;
+    # gh.enable = true;
     nm-applet.indicator = true;
     #neovim.enable = true;
 
