@@ -101,8 +101,6 @@ in {
   environment.systemPackages = with pkgs; [ lsd fzf ];
 
   programs = {
-
-    gh = { enable = true; };
     # Zsh configuration
     zsh = {
       enable = true;
