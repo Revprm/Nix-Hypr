@@ -83,7 +83,7 @@ in {
     xarchiver
     yad
     yt-dlp
-
+    gh
     #waybar  # if wanted experimental next line
     #(pkgs.waybar.overrideAttrs (oldAttrs: { mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];}))
   ]) ++ [ python-packages ];
@@ -119,6 +119,7 @@ in {
     hyprlock.enable = true;
     firefox.enable = true;
     git.enable = true;
+    gh.enable = true;
     nm-applet.indicator = true;
     #neovim.enable = true;
 

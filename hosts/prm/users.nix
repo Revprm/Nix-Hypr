@@ -35,7 +35,6 @@ in {
         obs-studio
         postman
         spicetify-cli
-        gh
 
         # NodeJS
         nodejs
