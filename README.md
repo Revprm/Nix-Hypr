@@ -1,218 +1,78 @@
-# Personal NixOS Hyprland Configuration
+# NixOS Hyprland Configuration
 
-This is a highly customized NixOS configuration for Hyprland, a dynamic tiling Wayland compositor. Originally based on [JaKooLit's configuration](https://github.com/JaKooLit/NixOS-Hyprland), it has been extensively modified and personalized.
+A complete NixOS setup with Hyprland window manager. Based on [JaKooLit's configuration](https://github.com/JaKooLit/NixOS-Hyprland) with personal modifications.
 
-## 🌟 Features
+## ✨ What's Included
 
-### 🪟 Desktop Environment
+-   **Hyprland** - Modern Wayland compositor
+-   **Waybar** - Status bar
+-   **Rofi** - Application launcher
+-   **Kitty** - Terminal emulator
+-   **Development tools** - VS Code, languages (Node.js, Python, Rust, Go, PHP, C/C++)
+-   **Gaming** - Steam, Lutris, Heroic
+-   **Graphics drivers** - AMD, Intel, NVIDIA support
+-   **Theming** - Catppuccin colors, custom configs
 
--   **Window Manager**: [Hyprland](https://hyprland.org/) with custom animations, keybindings, and workspace management
--   **Status Bar**: Waybar with customizable modules and styling
--   **Shell Alternative**: QuickShell for advanced desktop shell functionality
--   **Application Launcher**: Rofi with multiple themes and configurations
--   **Lock Screen**: Hyprlock with custom styling
--   **Idle Management**: Hypridle for automatic screen locking
--   **Logout Menu**: Wlogout with custom styling
+## 🚀 Quick Install
 
-### 🎨 Theming & Aesthetics
-
--   **Theme Engine**: Wallust for dynamic color scheme generation
--   **Cursor Theme**: Bibata-Modern-Ice
--   **GTK Themes**: Custom configurations for GTK 3.0
--   **Qt Themes**: Kvantum support with Catppuccin themes
--   **Icons**: Custom icon configurations
--   **Wallpaper Management**: Swww for wallpaper switching with effects
-
-### 🚀 System Components
-
--   **Login Manager**: Greetd with `tuigreet` for a fast, lightweight TUI login
--   **Terminal**: Kitty with custom themes and configurations
--   **Shell**: Zsh with Oh My Zsh, custom aliases, and prompt with fastfetch
--   **File Manager**: Thunar with plugins and custom actions
--   **Audio**: PipeWire with full ALSA and PulseAudio compatibility
--   **Notifications**: SwayNotificationCenter (swaync) with custom styling
--   **Screenshots**: Grim + Slurp + Swappy for screenshot workflow
-
-### 🔧 Development Tools
-
--   **Editors**: VS Code, Neovim support
--   **Languages**: Full development environment for:
-    -   **Node.js**: npm, yarn, TypeScript support
-    -   **Python**: pip, virtualenv, development packages
-    -   **Rust**: rustc, cargo
-    -   **PHP**: composer, psalm
-    -   **Go**: go, gopls, delve debugger
-    -   **C/C++**: gcc, clang, make
--   **Containers**: Docker, Docker Compose
--   **Version Control**: Git, GitHub CLI
--   **Monitoring**: htop, btop, nvtop
-
-### 🎮 Gaming & Entertainment
-
--   **Gaming Platforms**: Steam, Lutris, Heroic Game Launcher
--   **Game Tools**: ProtonUp-Qt for Proton management
--   **Media**: MPV with MPRIS support, yt-dlp
--   **Entertainment**: ani-cli for anime, manga-tui for manga
-
-### 🔒 Security & Networking
-
--   **Network Analysis**: Wireshark, nmap
--   **Digital Forensics**: binwalk, foremost, steghide, stegseek, zsteg
--   **Password Cracking**: John the Ripper, hashcat
--   **Debugging**: GDB
--   **System Security**: Polkit integration, secure boot support
-
-### 🖥️ Hardware Support
-
--   **Graphics Drivers**: Modular support for AMD, Intel, and NVIDIA
--   **NVIDIA Features**: PRIME support for laptops, CUDA compatibility
--   **Virtual Machines**: QEMU guest services, SPICE support
--   **Power Management**: CPU frequency scaling, zram swap
--   **Bluetooth**: Full Bluetooth stack with Blueman
--   **Printing**: Optional CUPS integration (commented out)
-
-## 🚀 Installation
-
-### Prerequisites
-
--   A working NixOS system
--   Git installed (`nix-shell -p git` if not available)
--   Root access for system configuration
-
-### Quick Installation
-
-**Option 1: Auto Installation (Recommended)**
+**Automatic (recommended):**
 
 ```bash
 curl -s https://raw.githubusercontent.com/Revprm/Nix-Hypr/master/auto-install.sh | bash
 ```
 
-**Option 2: Manual Installation**
+**Manual:**
 
 ```bash
-# Clone the repository
-git clone https://github.com/Revprm/Nix-Hypr.git ~
+git clone https://github.com/Revprm/Nix-Hypr.git ~/Nix-Hypr
 cd ~/Nix-Hypr
-
-# Run the installation script
-chmod +x install.sh
-./install.sh
+chmod +x install.sh && ./install.sh
 ```
 
-### Installation Process
+The installer will:
 
-Both installation methods will:
+1. Detect your hardware (VM, GPU type)
+2. Ask for hostname and keyboard layout
+3. Generate hardware config
+4. Install everything and copy configs
 
-1. **System Detection**: Automatically detect VM environment and GPU type
-2. **Host Configuration**: Prompt for hostname (default: "default")
-3. **Keyboard Layout**: Configure your preferred layout (default: "us")
-4. **Hardware Configuration**: Generate hardware-specific settings
-5. **User Setup**: Configure for the current user
-6. **Driver Setup**: Enable appropriate graphics drivers automatically
-7. **Dotfiles Installation**: Copy all configuration files to `~/.config`
+After installation, reboot and select Hyprland from the login screen.
 
-### Supported Hardware
-
-The configuration includes modular driver support:
-
--   **AMD**: Automatic AMDGPU driver configuration
--   **Intel**: Integrated graphics with hardware acceleration
--   **NVIDIA**: Proprietary drivers with Wayland support
--   **NVIDIA Prime**: Hybrid graphics for laptops
--   **Virtual Machines**: QEMU guest services and SPICE support
-
-### Post-Installation
-
-After installation completes:
-
-1. Reboot your system (recommended)
-2. Start Hyprland from the login screen
-3. Customize settings in `hosts/<hostname>/variables.nix`
-
-## 📂 Project Structure
+## � Structure
 
 ```
-NixOS-Hyprland/
-├── 📄 flake.nix                    # Main flake configuration entry point
-├── 🏠 hosts/                       # Host-specific configurations
-│   ├── 📁 default/                 # Default host template
-│   │   ├── config.nix              # Main system configuration
-│   │   ├── packages-fonts.nix      # System packages and fonts
-│   │   ├── users.nix               # User accounts and shell setup
-│   │   ├── variables.nix           # Customizable variables
-│   │   └── hardware.nix            # Auto-generated hardware config
-│   └── 📁 prm/                     # Custom host example
-│       └── ...                     # Same structure as default
-├── 🧩 modules/                     # Modular system components
-│   ├── amd-drivers.nix             # AMD graphics drivers
-│   ├── intel-drivers.nix           # Intel graphics drivers
-│   ├── nvidia-drivers.nix          # NVIDIA graphics drivers
-│   ├── nvidia-prime-drivers.nix    # NVIDIA Prime for laptops
-│   ├── quickshell.nix              # QuickShell desktop shell
-│   ├── vm-guest-services.nix       # Virtual machine support
-│   └── local-hardware-clock.nix    # Hardware clock configuration
-├── ⚙️  config/                     # Application configurations
-│   ├── 🎨 hypr/                    # Hyprland configuration
-│   │   ├── hyprland.conf           # Main Hyprland config
-│   │   ├── hyprlock.conf           # Lock screen config
-│   │   ├── hypridle.conf           # Idle management
-│   │   ├── monitors.conf           # Monitor settings
-│   │   ├── workspaces.conf         # Workspace configuration
-│   │   ├── animations/             # Animation presets
-│   │   ├── scripts/                # Hyprland scripts
-│   │   └── wallpaper_effects/      # Wallpaper transition effects
-│   ├── 📊 waybar/                  # Status bar configuration
-│   ├── 🚀 rofi/                    # Application launcher themes
-│   ├── 💻 kitty/                   # Terminal configuration
-│   ├── 🎵 cava/                    # Audio visualizer
-│   ├── 📈 btop/                    # System monitor themes
-│   ├── 🎨 wallust/                 # Color scheme generator
-│   ├── 🔔 swaync/                  # Notification center
-│   ├── 🎯 Kvantum/                 # Qt theming
-│   ├── 🖱️  qt5ct/ & qt6ct/         # Qt configuration tools
-│   ├── 🏃 quickshell/              # QuickShell configuration
-│   ├── 📷 swappy/                  # Screenshot editor
-│   └── 🚪 wlogout/                 # Logout menu
-├── 🎨 assets/                      # Additional assets and configs
-│   ├── fastfetch/                  # System info display configs
-│   ├── gtk-3.0/                    # GTK theme settings
-│   ├── Thunar/                     # File manager configuration
-│   └── xfce4/                      # XFCE helper configurations
-└── 🔧 Scripts/                     # Utility scripts
-    ├── auto-install.sh             # Automated installation
-    ├── install.sh                  # Manual installation
-    ├── update.sh                   # System update script
-    └── copy.sh                     # Configuration file deployment
+├── flake.nix                 # Main config
+├── hosts/                    # Per-machine configs
+│   ├── default/             # Template
+│   └── prm/                 # Example custom host
+├── modules/                  # Hardware drivers & services
+├── config/                   # App configurations (hypr, waybar, etc.)
+└── assets/                   # Extra config files
 ```
 
-### Key Components
+## ⚙️ Customization
 
-#### 🏠 Host Configurations (`hosts/`)
+Edit `hosts/<hostname>/variables.nix` for quick changes:
 
-Each host directory contains:
+```nix
+{
+  gitUsername = "YourName";
+  gitEmail = "your@email.com";
+  browser = "firefox";
+  terminal = "kitty";
+  keyboardLayout = "us";
+}
+```
 
--   **`config.nix`**: Core system settings, services, and module imports
--   **`packages-fonts.nix`**: System-wide packages, fonts, and program configurations
--   **`users.nix`**: User accounts, groups, shell setup, and user-specific packages
--   **`variables.nix`**: Easily customizable variables (browser, terminal, git config, etc.)
--   **`hardware.nix`**: Auto-generated hardware configuration (created during installation)
+## 🔧 Updates
 
-#### 🧩 System Modules (`modules/`)
+```bash
+./update.sh
+```
 
-Modular components that can be enabled/disabled:
+## 🙏 Credits
 
--   **Graphics Drivers**: Separate modules for AMD, Intel, NVIDIA, and NVIDIA Prime
--   **QuickShell**: Advanced desktop shell with Qt/QML support
--   **VM Support**: Guest services for virtual machine environments
--   **Hardware Clock**: Local time synchronization for dual-boot systems
-
-#### ⚙️ Application Configs (`config/`)
-
-Pre-configured dotfiles for all major applications, organized by program. These are automatically copied to `~/.config/` during installation.
-
-#### 🎨 Assets (`assets/`)
-
-Additional configuration files and themes that enhance the desktop experience.
+Thanks to [JaKooLit](https://github.com/JaKooLit) for the original configuration.
 
 ## 🛠️ Customization
 
