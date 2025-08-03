@@ -70,6 +70,8 @@ in {
 
         # Cysec Stuffs
         wireshark
+	exiftool
+	file
         nmap
         binwalk
         john

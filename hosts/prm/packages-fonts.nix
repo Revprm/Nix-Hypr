@@ -127,6 +127,7 @@ in {
     firefox.enable = true;
     git.enable = true;
     nm-applet.indicator = true;
+    gamemode.enable = true;
     #neovim.enable = true;
 
     thunar.enable = true;
@@ -138,13 +139,12 @@ in {
       tumbler
     ];
 
-    virt-manager.enable = false;
+    virt-manager.enable = true;
 
     steam = {
       enable = true;
       gamescopeSession.enable = true;
-      remotePlay.openFirewall = true;
-      dedicatedServer.openFirewall = true;
+      remotePlay.openFirewall = false;
     };
 
     xwayland.enable = true;

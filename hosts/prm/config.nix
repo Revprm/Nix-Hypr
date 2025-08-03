@@ -44,9 +44,9 @@ in {
     };
 
     # Needed For Some Steam Games
-    #kernel.sysctl = {
-    #  "vm.max_map_count" = 2147483642;
-    #};
+    kernel.sysctl = {
+     "vm.max_map_count" = 2147483642;
+    };
 
     ## BOOT LOADERS: NOTE USE ONLY 1. either systemd or grub  
     # Bootloader SystemD
@@ -101,13 +101,17 @@ in {
 
   # Extra Module Options
   drivers = {
-    amdgpu.enable = true;
+    amdgpu.enable = false;
     intel.enable = true;
-    nvidia.enable = false;
+    nvidia.enable = true;
     nvidia-prime = {
-      enable = false;
-      intelBusID = "";
-      nvidiaBusID = "";
+      offload = {
+        enable = true;
+        enableOffload = true;
+      };
+      enable = true;
+      intelBusID = "PCI:0:2:0"; # Set your Intel Bus ID here
+      nvidiaBusID = "PCI:1:0:0"; # Set your Nvidia Bus ID here
     };
   };
   vm.guest-services.enable = false;
@@ -334,7 +338,11 @@ in {
 
   # OpenGL
   hardware.graphics = { enable = true; };
-
+  hardware.opengl = {
+  	enable = true;
+	  driSupport = true;
+	  driSupport32Bit = true;
+  }
   console.keyMap = "${keyboardLayout}";
 
   environment.sessionVariables = {
