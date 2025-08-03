@@ -62,16 +62,10 @@ in {
         gopls
         delve
 
-        # Gaming
-        steam
-        lutris
-        heroic
-        protonup-qt
-
         # Cysec Stuffs
         wireshark
-	exiftool
-	file
+        exiftool
+        file
         nmap
         binwalk
         john
@@ -81,7 +75,6 @@ in {
         stegseek
         zsteg
         gdb
-        volatility3
         ghidra-bin
         cutter
         yara

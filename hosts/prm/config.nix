@@ -51,7 +51,7 @@ in {
     loader.systemd-boot.enable = true;
 
     loader.efi = {
-      #efiSysMountPoint = "/efi"; #this is if you have separate /efi partition
+      efiSysMountPoint = "/boot"; # this is if you have separate /efi partition
       canTouchEfiVariables = false;
     };
 
@@ -103,10 +103,6 @@ in {
     intel.enable = true;
     nvidia.enable = true;
     nvidia-prime = {
-      offload = {
-        enable = true;
-        enableOffload = true;
-      };
       enable = true;
       intelBusID = "PCI:0:2:0"; # Set your Intel Bus ID here
       nvidiaBusID = "PCI:1:0:0"; # Set your Nvidia Bus ID here
@@ -254,6 +250,24 @@ in {
     cpuFreqGovernor = "schedutil";
   };
 
+  services.tlp = {
+    enable = true;
+    settings = {
+      # Sets a balanced governor for both AC and Battery
+      CPU_SCALING_GOVERNOR_ON_AC = "schedutil";
+      CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
+
+      # Use a balanced energy performance policy
+      CPU_ENERGY_PERF_POLICY_ON_AC = "balance_performance";
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
+
+      # Ensure CPU boost is on for AC power for when you need it
+      CPU_BOOST_ON_AC = 1;
+      CPU_BOOST_ON_BAT = 0; # Keep boost off on battery to save power
+    };
+  };
+  services.power-profiles-daemon.enable = false;
+
   #hardware.sane = {
   #  enable = true;
   #  extraBackends = [ pkgs.sane-airscan ];
@@ -327,7 +341,7 @@ in {
   };
 
   # Virtualization / Containers
-  virtualisation.libvirtd.enable = false;
+  virtualisation.libvirtd.enable = true;
   virtualisation.podman = {
     enable = false;
     dockerCompat = false;
@@ -336,11 +350,8 @@ in {
 
   # OpenGL
   hardware.graphics = { enable = true; };
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
+  hardware.opengl = { enable = true; };
+
   console.keyMap = "${keyboardLayout}";
 
   environment.sessionVariables = {

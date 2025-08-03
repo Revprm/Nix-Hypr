@@ -45,6 +45,9 @@ in {
     wget
     xdg-user-dirs
     xdg-utils
+    volatility3
+    sbctl
+    niv
 
     fastfetch
     (mpv.override { scripts = [ mpvScripts.mpris ]; }) # with tray
@@ -91,6 +94,12 @@ in {
     xarchiver
     yad
     yt-dlp
+
+    mangohud
+    protonup-qt
+    lutris
+    bottles
+    heroic
     #waybar  # if wanted experimental next line
     #(pkgs.waybar.overrideAttrs (oldAttrs: { mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];}))
   ]) ++ [ python-packages ];
@@ -144,7 +153,6 @@ in {
     steam = {
       enable = true;
       gamescopeSession.enable = true;
-      remotePlay.openFirewall = false;
     };
 
     xwayland.enable = true;
