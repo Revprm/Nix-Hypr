@@ -22,22 +22,29 @@
 "fixed-center": false,
 "ipc": true,
 "margin-top": 5,
-//"margin-bottom": 5,
+"margin-bottom": 5,
 "width": 1000,
 	
 "modules-left": [
 	"clock#5", 
+	"custom/separator#line",
 	"mpris", 
-	"tray", 
-	"group/notify"
+	"custom/separator#line",
+	"group/connections",
+	"custom/separator#blank",
+	"group/notify",
 	],
 	  
-"modules-center": ["hyprland/workspaces#kanji"], 
+"modules-center": [
+	"hyprland/workspaces#kanji",
+	"custom/cava_mviz"
+	], 
 	
 "modules-right": [
-	"pulseaudio#1",
-	"backlight#2", 
-	"battery"
+	"group/audio",
+	"group/mobo_drawer", 
+	"group/laptop",
+	"group/power"
 	],
 
 }

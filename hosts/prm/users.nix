@@ -35,6 +35,7 @@ in {
         obs-studio
         postman
         spicetify-cli
+        texliveFull
 
         # NodeJS
         nodejs

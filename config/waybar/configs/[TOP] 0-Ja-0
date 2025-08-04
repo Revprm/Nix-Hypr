@@ -10,7 +10,7 @@
   "$HOME/.config/waybar/UserModules",
   ],
 "layer": "top",
-//"mode": "dock",
+// "mode": "dock",
 "exclusive": true,
 "passthrough": false,
 "position": "top",
@@ -34,7 +34,7 @@
 "modules-center": [
 	"group/app_drawer",
 	"custom/separator#dot-line",
-	"hyprland/workspaces#rw",
+	"hyprland/workspaces",
 	"custom/separator#dot-line",
 	"group/notify",	
 	],
