@@ -78,6 +78,7 @@ in {
         ghidra-bin
         cutter
         yara
+        burpsuite
 
         # Animanga
         ani-cli
