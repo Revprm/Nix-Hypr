@@ -34,7 +34,7 @@ tooltip label {
 #workspaces button {
     color: #565f89; /* Surface2 */
     background-color: transparent;
-    padding: 8px 8px; /* Symmetrical horizontal padding for better alignment */
+    padding: 6px 7px; /* Symmetrical horizontal padding for better alignment */
     transition: color 0.3s ease, background-color 0.3s ease;
 }
 
@@ -122,7 +122,7 @@ tooltip label {
 #custom-weather.snowyIcyNight,
 #custom-weather.sunnyDay {
     opacity: 1;
-    padding: 8px 8px; /* Consistent padding for all modules */
+    padding: 6px 7px; /* Consistent padding for all modules */
     transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transitions for state changes */
 }
 

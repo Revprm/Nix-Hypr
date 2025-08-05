@@ -22,16 +22,13 @@
 "fixed-center": false,
 "ipc": true,
 "margin-top": 5,
-"margin-bottom": 5,
-"width": 1000,
+//"margin-bottom": 5,
+"width": 1200,
 	
 "modules-left": [
 	"clock#5", 
 	"custom/separator#line",
 	"mpris", 
-	"custom/separator#line",
-	"group/connections",
-	"custom/separator#blank",
 	"group/notify",
 	],
 	  
@@ -41,6 +38,7 @@
 	], 
 	
 "modules-right": [
+	"tray",
 	"group/audio",
 	"group/mobo_drawer", 
 	"group/laptop",
