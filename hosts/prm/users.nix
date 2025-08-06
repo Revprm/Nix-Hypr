@@ -28,8 +28,6 @@ in {
         vscode
         gcc
         gnumake
-        docker
-        docker-compose
         tree
         htop
         obs-studio

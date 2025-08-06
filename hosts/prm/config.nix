@@ -253,17 +253,34 @@ in {
   services.tlp = {
     enable = true;
     settings = {
-      # Sets a balanced governor for both AC and Battery
-      CPU_SCALING_GOVERNOR_ON_AC = "schedutil";
-      CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
+      # --- Performance Settings for Gaming on AC Power ---
 
-      # Use a balanced energy performance policy
-      CPU_ENERGY_PERF_POLICY_ON_AC = "balance_performance";
-      CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
+      # Use the 'performance' governor to lock CPU at high speeds.
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
 
-      # Ensure CPU boost is on for AC power for when you need it
+      # Prioritize performance over energy saving for the CPU.
+      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+
+      # Ensure CPU Boost (Turbo) is enabled.
       CPU_BOOST_ON_AC = 1;
-      CPU_BOOST_ON_BAT = 0; # Keep boost off on battery to save power
+
+      # Set PCIe Active State Power Management to max performance.
+      # This is critical for the NVIDIA GPU and NVMe drive latency.
+      PCIE_ASPM_ON_AC = "performance";
+
+      # Disable USB autosuspend to prevent input lag on mouse/keyboard.
+      USB_AUTOSUSPEND = 0;
+
+      # NOTE: NVIDIA GPU performance (PowerMizer) is managed automatically by the
+      # proprietary driver, not by TLP. These settings optimize the rest of
+      # the system for gaming.
+
+      # --- Power Saving Settings for Battery ---
+      # These are sensible defaults to preserve battery life when not gaming.
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
+      CPU_BOOST_ON_BAT = 0;
+      PCIE_ASPM_ON_BAT = "powersave";
     };
   };
   services.power-profiles-daemon.enable = false;
