@@ -13,6 +13,7 @@ in {
     ./hardware.nix
     ./users.nix
     ./packages-fonts.nix
+    ./modules/power-management.nix
     ../../modules/amd-drivers.nix
     ../../modules/nvidia-drivers.nix
     ../../modules/nvidia-prime-drivers.nix
@@ -243,46 +244,6 @@ in {
     swapDevices = 1;
     algorithm = "zstd";
   };
-
-  powerManagement = {
-    enable = true;
-    cpuFreqGovernor = "schedutil";
-  };
-
-  services.tlp = {
-    enable = true;
-    settings = {
-      # --- Performance Settings for Gaming on AC Power ---
-
-      # Use the 'performance' governor to lock CPU at high speeds.
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-
-      # Prioritize performance over energy saving for the CPU.
-      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-
-      # Ensure CPU Boost (Turbo) is enabled.
-      CPU_BOOST_ON_AC = 1;
-
-      # Set PCIe Active State Power Management to max performance.
-      # This is critical for the NVIDIA GPU and NVMe drive latency.
-      PCIE_ASPM_ON_AC = "performance";
-
-      # Disable USB autosuspend to prevent input lag on mouse/keyboard.
-      USB_AUTOSUSPEND = 0;
-
-      # NOTE: NVIDIA GPU performance (PowerMizer) is managed automatically by the
-      # proprietary driver, not by TLP. These settings optimize the rest of
-      # the system for gaming.
-
-      # --- Power Saving Settings for Battery ---
-      # These are sensible defaults to preserve battery life when not gaming.
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-      CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
-      CPU_BOOST_ON_BAT = 0;
-      PCIE_ASPM_ON_BAT = "powersave";
-    };
-  };
-  services.power-profiles-daemon.enable = false;
 
   #hardware.sane = {
   #  enable = true;
