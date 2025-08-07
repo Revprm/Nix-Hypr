@@ -367,6 +367,7 @@ in {
         ovmf.packages = [ pkgs.OVMFFull.fd ];
       };
     };
+    docker.enable = true;
     spiceUSBRedirection.enable = true;
   };
   services.spice-vdagentd.enable = true;

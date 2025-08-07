@@ -20,6 +20,7 @@ in {
         "video"
         "input"
         "audio"
+        "docker"
       ];
 
       # define user packages here
@@ -78,6 +79,7 @@ in {
         cutter
         yara
         burpsuite
+        sonic-visualiser
 
         # Animanga
         ani-cli
