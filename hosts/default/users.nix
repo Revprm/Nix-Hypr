@@ -3,7 +3,11 @@
 
 { pkgs, username, ... }:
 
-let inherit (import ./variables.nix) gitUsername;
+let
+  inherit (import ./variables.nix) gitUsername;
+
+  default = import ./packages/default.nix { inherit pkgs; };
+
 in {
   users = {
     mutableUsers = true;

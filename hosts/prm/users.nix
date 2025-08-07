@@ -1,9 +1,14 @@
-# 💫 https://github.com/JaKooLit 💫 #
-# Users - NOTE: Packages defined on this will be on current user only
-
 { pkgs, username, ... }:
 
-let inherit (import ./variables.nix) gitUsername;
+let
+  inherit (import ./variables.nix) gitUsername;
+
+  # Import package modules
+  developer = import ./packages/developer-tools.nix { inherit pkgs; };
+  security = import ./packages/security-tools.nix { inherit pkgs; };
+  entertainment = import ./packages/entertainment.nix { inherit pkgs; };
+  social = import ./packages/social.nix { inherit pkgs; };
+
 in {
   users = {
     mutableUsers = true;
@@ -23,71 +28,9 @@ in {
         "docker"
       ];
 
-      # define user packages here
-      packages = with pkgs; [
-        # Developer Tools
-        vscode
-        gcc
-        gnumake
-        tree
-        htop
-        obs-studio
-        postman
-        spicetify-cli
-        texliveFull
-
-        # NodeJS
-        nodejs
-        nodePackages.npm
-        nodePackages.yarn
-        nodePackages.typescript
-        nodePackages.typescript-language-server
-
-        # Python
-        python3
-        python3Packages.pip
-        python3Packages.virtualenv
-
-        # Rust
-        rustc
-        cargo
-
-        # PHP
-        php
-        php83Packages.composer
-        php83Packages.psalm
-
-        # Golang
-        go
-        gopls
-        delve
-
-        # Cysec Stuffs
-        wireshark
-        exiftool
-        file
-        nmap
-        binwalk
-        john
-        hashcat
-        foremost
-        steghide
-        stegseek
-        zsteg
-        gdb
-        ghidra-bin
-        cutter
-        yara
-        burpsuite
-        sonic-visualiser
-
-        # Animanga
-        ani-cli
-        manga-tui
-
-        # Social
-        zapzap
-      ];
+      # Modularized user packages
+      packages = developer.developer-packages ++ security.security-packages
+        ++ entertainment.entertainment-packages ++ social.social-packages;
     };
 
     defaultUserShell = pkgs.zsh;
