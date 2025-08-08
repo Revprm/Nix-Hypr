@@ -45,7 +45,6 @@ in {
     wget
     xdg-user-dirs
     xdg-utils
-    volatility3
     sbctl
     niv
 
