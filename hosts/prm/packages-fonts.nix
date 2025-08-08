@@ -67,7 +67,7 @@ in {
     inxi
     jq
     kitty
-    libsForQt5.qtstyleplugin-kvantum # kvantum
+    kdePackages.qtstyleplugin-kvantum # kvantum
     networkmanagerapplet
     nwg-displays
     nwg-look
@@ -76,7 +76,6 @@ in {
     pavucontrol
     playerctl
     polkit_gnome
-    libsForQt5.qt5ct
     kdePackages.qt6ct
     kdePackages.qtwayland
     kdePackages.qtstyleplugin-kvantum # kvantum
@@ -93,6 +92,15 @@ in {
     xarchiver
     yad
     yt-dlp
+
+    kdePackages.sddm
+
+    (catppuccin-sddm.override {
+      flavor = "mocha";
+      font = "Noto Sans";
+      fontSize = "20";
+      background = "${wallpapers/thumb-1920-1370314.jpeg}";
+    })
 
     mangohud
     protonup-qt

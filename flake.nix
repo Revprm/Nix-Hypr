@@ -6,7 +6,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     #hyprland.url = "github:hyprwm/Hyprland"; # hyprland development
-    #distro-grub-themes.url = "github:AdisonCavani/distro-grub-themes";
+    distro-grub-themes.url = "github:AdisonCavani/distro-grub-themes";
 
     quickshell = {
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
@@ -36,7 +36,7 @@
           };
           modules = [
             ./hosts/${host}/config.nix
-            # inputs.distro-grub-themes.nixosModules.${system}.default
+            inputs.distro-grub-themes.nixosModules.${system}.default
             ./modules/quickshell.nix # quickshell module
           ];
         };

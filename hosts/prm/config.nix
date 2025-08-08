@@ -48,27 +48,25 @@ in {
 
     ## BOOT LOADERS: NOTE USE ONLY 1. either systemd or grub  
     # Bootloader SystemD
-    loader.systemd-boot.enable = true;
+    # loader.systemd-boot.enable = true;
 
     loader.efi = {
       efiSysMountPoint = "/boot"; # this is if you have separate /efi partition
       canTouchEfiVariables = false;
     };
 
-    loader.timeout = 5;
+    # loader.timeout = 5;
 
     # Bootloader GRUB
-    #loader.grub = {
-    #enable = true;
-    #  devices = [ "nodev" ];
-    #  efiSupport = true;
-    #  gfxmodeBios = "auto";
-    #  memtest86.enable = true;
-    #  extraGrubInstallArgs = [ "--bootloader-id=${host}" ];
-    #  configurationName = "${host}";
-    #	 };
-
-    # Bootloader GRUB theme, configure below
+    loader.grub = {
+      enable = true;
+      devices = [ "nodev" ];
+      efiSupport = true;
+      gfxmodeBios = "auto";
+      memtest86.enable = true;
+      extraGrubInstallArgs = [ "--bootloader-id=${host}" ];
+      configurationName = "${host}";
+    };
 
     ## -end of BOOTLOADERS----- ##
 
@@ -92,10 +90,10 @@ in {
   };
 
   # GRUB Bootloader theme. Of course you need to enable GRUB above.. duh! and also, enable it on flake.nix
-  #distro-grub-themes = {
-  #  enable = true;
-  #  theme = "nixos";
-  #};
+  distro-grub-themes = {
+    enable = true;
+    theme = "nixos";
+  };
 
   # Extra Module Options
   drivers = {
@@ -121,7 +119,7 @@ in {
   # Set your time zone.
   services.automatic-timezoned.enable = true; # based on IP location
 
-  #https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  #https://en.wikipedia.org/wiki/Lt_of_tz_database_time_zones
   #time.timeZone = "Asia/Seoul"; # Set local timezone
 
   # Select internationalisation properties.
@@ -142,21 +140,18 @@ in {
   # Services to start
   services = {
     xserver = {
-      enable = false;
+      enable =
+        true; # ← This was set to `false`, which would disable the entire X server
+      displayManager = {
+        defaultSession = "hyprland";
+        sddm = {
+          enable = true;
+          theme = "catppuccin-mocha";
+        };
+      };
       xkb = {
         layout = "${keyboardLayout}";
         variant = "";
-      };
-    };
-
-    greetd = {
-      enable = true;
-      settings = {
-        default_session = {
-          user = username;
-          command =
-            "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland"; # start Hyprland with a TUI login manager
-        };
       };
     };
 
@@ -353,7 +348,6 @@ in {
 
   # OpenGL
   hardware.graphics = { enable = true; };
-  hardware.opengl = { enable = true; };
 
   console.keyMap = "${keyboardLayout}";
 
