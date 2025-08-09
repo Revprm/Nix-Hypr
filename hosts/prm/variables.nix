@@ -13,7 +13,7 @@
   clock24h = true;
 
   # Program Options
-  browser = "firefox"; # Set Default Browser (google-chrome-stable for google-chrome)
+  browser = "firefox";
   terminal = "kitty"; # Set Default System Terminal
   keyboardLayout = "us";
 }

@@ -99,7 +99,7 @@ in {
       flavor = "mocha";
       font = "Noto Sans";
       fontSize = "20";
-      background = "${wallpapers/thumb-1920-1370314.jpeg}";
+      loginBackground = true;
     })
 
     mangohud

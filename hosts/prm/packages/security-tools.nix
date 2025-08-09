@@ -6,6 +6,7 @@
     wireshark
     nmap
     burpsuite
+    tcpdump
 
     # File Analysis
     exiftool
