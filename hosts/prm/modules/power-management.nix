@@ -93,10 +93,6 @@
 
       # --- Advanced Battery Optimization ---
 
-      # Battery Charge Thresholds (if supported by your laptop)
-      START_CHARGE_THRESH_BAT0 = 40; # Start charging at 40%
-      STOP_CHARGE_THRESH_BAT0 = 100; # Stop charging at 80%
-
       # Radeon GPU Power Management (if you have AMD integrated graphics)
       RADEON_POWER_PROFILE_ON_AC = "high";
       RADEON_POWER_PROFILE_ON_BAT = "low";
