@@ -18,7 +18,16 @@ in {
     ../../modules/vm-guest-services.nix
     ../../modules/local-hardware-clock.nix
   ];
-
+  drivers = {
+    amdgpu.enable = false;
+    intel.enable = true;
+    nvidia.enable = true;
+    nvidia-prime = {
+      enable = true;
+      intelBusID = "PCI:0:2:0"; # Set your Intel Bus ID here
+      nvidiaBusID = "PCI:1:0:0"; # Set your Nvidia Bus ID here
+    };
+  };
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
