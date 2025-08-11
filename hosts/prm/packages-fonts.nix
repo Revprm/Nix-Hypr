@@ -16,7 +16,7 @@ in {
     config = {
       allowUnfree = true;
       packageOverrides = pkgs: {
-        steam = pkgs.steam.override { extraEnv = { GDK_SCALE = "2"; }; };
+        steam = pkgs.steam.override { extraEnv = { GDK_SCALE = "1"; }; };
       };
     };
   };

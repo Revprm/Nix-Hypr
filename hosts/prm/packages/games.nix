@@ -3,7 +3,7 @@
 {
   games-packages = with pkgs;
     [
-      # Games
+      # Gamesss
       osu-lazer
     ];
 }
