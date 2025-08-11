@@ -8,6 +8,7 @@ let
   security = import ./packages/security-tools.nix { inherit pkgs; };
   entertainment = import ./packages/entertainment.nix { inherit pkgs; };
   social = import ./packages/social.nix { inherit pkgs; };
+  games = import ./packages/games.nix { inherit pkgs; };
 
 in {
   imports = [ ./modules/zsh.nix ];
@@ -31,7 +32,8 @@ in {
 
       # Modularized user packages
       packages = developer.developer-packages ++ security.security-packages
-        ++ entertainment.entertainment-packages ++ social.social-packages;
+        ++ entertainment.entertainment-packages ++ social.social-packages
+        ++ games.games-packages;
     };
 
     defaultUserShell = pkgs.zsh;

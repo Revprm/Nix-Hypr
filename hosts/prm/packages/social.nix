@@ -1,9 +1,9 @@
 { pkgs, ... }:
 
 {
-  social-packages = with pkgs;
-    [
-      # Communication
-      zapzap
-    ];
+  social-packages = with pkgs; [
+    # Communication
+    zapzap
+    zoom-us
+  ];
 }

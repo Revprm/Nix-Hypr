@@ -38,5 +38,8 @@
     go
     gopls
     delve
+
+    # Documents
+    libreoffice
   ];
 }
