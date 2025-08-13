@@ -12,6 +12,8 @@
     postman
     spicetify-cli
     texliveFull
+    p7zip
+    postman
 
     # NodeJS Ecosystem
     nodejs

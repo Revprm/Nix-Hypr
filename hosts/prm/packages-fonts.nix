@@ -92,6 +92,7 @@ in {
     xarchiver
     yad
     yt-dlp
+    openvpn
 
     kdePackages.sddm
 

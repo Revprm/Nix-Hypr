@@ -1,6 +1,7 @@
 { config, pkgs, host, username, options, lib, inputs, system, ... }: {
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest; # Kernel
+    kernelPackages = pkgs.linuxPackages_zen; # Kernel
+    # kernelPackages = pkgs.linuxPackages_latest; # Kernel
     kernelParams = [
       "systemd.mask=dev-tpmrm0.device" # this is to mask that stupid 1.5 mins systemd bug
       "nowatchdog"
