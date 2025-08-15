@@ -4,6 +4,7 @@
   developer-packages = with pkgs; [
     # Core Development Tools
     vscode
+    code-cursor
     gcc
     gnumake
     tree
