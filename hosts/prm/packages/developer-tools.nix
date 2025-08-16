@@ -54,7 +54,8 @@ in {
 
     # Documents
     libreoffice
-
+    obsidian
+    
     # Add Database if Needed (me personally uses docker for databases)
   ];
 }
