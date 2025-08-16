@@ -1,6 +1,19 @@
 { pkgs, ... }:
-
-{
+let
+  myPythonEnv = pkgs.python3.withPackages (python-pkgs:
+    with python-pkgs; [
+      pwntools # Example of a package, add more here
+      virtualenv
+      pip
+      pycryptodome
+      numpy
+      pandas
+      matplotlib
+      scikit-learn
+      flask
+      pillow
+    ]);
+in {
   developer-packages = with pkgs; [
     # Core Development Tools
     vscode
@@ -23,9 +36,7 @@
     nodePackages.typescript-language-server
 
     # Python Development
-    python3
-    python3Packages.pip
-    python3Packages.virtualenv
+    myPythonEnv
 
     # Rust Development
     rustc
