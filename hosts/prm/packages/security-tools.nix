@@ -23,6 +23,7 @@
     steghide
     stegseek
     zsteg
+    stegsolve
 
     # Reverse Engineering
     gdb

@@ -14,7 +14,6 @@
     spicetify-cli
     texliveFull
     p7zip
-    postman
 
     # NodeJS Ecosystem
     nodejs
@@ -44,5 +43,7 @@
 
     # Documents
     libreoffice
+
+    # Add Database if Needed (me personally uses docker for databases)
   ];
 }
