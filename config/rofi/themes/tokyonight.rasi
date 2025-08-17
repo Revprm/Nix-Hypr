@@ -1,108 +1,260 @@
-/*
- * ROFI color theme
+/**
+ * ROFI Color theme
  *
- * Based on Something Found in the Internet
- *
- * User: Contributors
- * Copyright: *!
+ * Enhanced Tokyo Night Theme
+ * User: Enhanced by Claude
+ * Copyright: Based on Tokyo Night colorscheme
  */
 
 configuration {
-    font: "Cascadia Code 10";
+    font: "JetBrainsMono Nerd Font 11";
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+    display-drun: " Apps";
+    display-run: " Run";
+    display-window: " Windows";
+    display-filebrowser: " Files";
+    drun-display-format: "{name}";
+    window-format: "{w} {c} {t}";
     
     drun {
-        display-name: "";
+        display-name: " Apps";
     }
-    
     run {
-        display-name: "";
+        display-name: " Run";
     }
-    
     window {
-        display-name: "";
+        display-name: " Windows";
+    }
+    filebrowser {
+        display-name: " Files";
     }
     
     timeout {
         delay: 10;
         action: "kb-cancel";
     }
+    
+    kb-row-up: "Up,Control+k,Shift+Tab,Shift+ISO_Left_Tab";
+    kb-row-down: "Down,Control+j";
+    kb-accept-entry: "Control+m,Return,KP_Enter";
+    kb-remove-to-eol: "Control+Shift+e";
+    kb-mode-next: "Shift+Right,Control+Tab";
+    kb-mode-previous: "Shift+Left,Control+Shift+Tab";
+    kb-row-left: "Control+Page_Up";
+    kb-row-right: "Control+Page_Down";
 }
 
 * {
     border: 0;
-    margin: 2;
-    padding: 2;
+    margin: 0;
+    padding: 0;
     spacing: 0;
-    border-radius: 5;
-
-    /* Color variables */
-    bg: #1a1b26;
-    bg-alt: #232433;
-    fg: #6a6f87;
-    fg-alt: #a9b1d6;
-
-    background-color: @bg;
-    text-color: @fg;
+    
+    /* Tokyo Night Color Palette */
+    bg-primary: #1a1b26;
+    bg-secondary: #24283b;
+    bg-selected: #414868;
+    bg-urgent: #f7768e;
+    
+    fg-primary: #c0caf5;
+    fg-secondary: #a9b1d6;
+    fg-muted: #565f89;
+    
+    accent-blue: #7aa2f7;
+    accent-purple: #bb9af7;
+    accent-cyan: #7dcfff;
+    accent-green: #9ece6a;
+    accent-orange: #ff9e64;
+    accent-red: #f7768e;
+    
+    background-color: transparent;
+    text-color: @fg-primary;
 }
 
 window {
     transparency: "real";
-    width: 700px;
-    border-radius: 12px;
+    location: center;
+    anchor: center;
+    fullscreen: false;
+    width: 800px;
+    x-offset: 0px;
+    y-offset: 0px;
+    
+    background-color: @bg-primary;
     border: 2px solid;
-    border-color: @bg-alt;
+    border-color: @accent-blue;
+    border-radius: 16px;
+    
+    /* Subtle shadow effect */
+    children: [mainbox];
 }
 
 mainbox {
-    children: [inputbar, listview];
-    border-radius: 12px;
-    padding: 8px;
+    enabled: true;
+    spacing: 12px;
+    margin: 0px;
+    padding: 16px;
+    border: 0px solid;
+    border-radius: 16px;
+    border-color: @accent-blue;
+    background-color: transparent;
+    children: ["inputbar", "listview", "message"];
 }
 
 inputbar {
-    background-color: @bg-alt;
-    children: [prompt, entry];
-    border-radius: 8px;
+    enabled: true;
+    spacing: 8px;
     margin: 0px 0px 8px 0px;
+    padding: 4px;
+    border: 1px solid;
+    border-radius: 12px;
+    border-color: @bg-selected;
+    background-color: @bg-secondary;
+    text-color: @fg-primary;
+    children: ["textbox-prompt-colon", "entry"];
+}
+
+textbox-prompt-colon {
+    enabled: true;
+    expand: false;
+    str: "";
+    padding: 12px 16px;
+    border-radius: 8px;
+    background-color: @accent-blue;
+    text-color: @bg-primary;
+    font: "JetBrainsMono Nerd Font Bold 12";
 }
 
 entry {
-    background-color: inherit;
-    padding: 12px 3px;
-    border-radius: 6px;
-}
-
-prompt {
-    background-color: inherit;
-    padding: 12px;
-    border-radius: 6px;
+    enabled: true;
+    background-color: transparent;
+    text-color: @fg-primary;
+    cursor: text;
+    placeholder: "Search applications...";
+    placeholder-color: @fg-muted;
+    padding: 12px 16px;
+    border-radius: 8px;
 }
 
 listview {
+    enabled: true;
+    columns: 1;
     lines: 8;
+    cycle: true;
+    dynamic: true;
+    scrollbar: false;
+    layout: vertical;
+    reverse: false;
+    fixed-height: true;
+    fixed-columns: true;
+    
     spacing: 4px;
+    margin: 0px;
+    padding: 0px;
+    border: 0px solid;
+    border-radius: 8px;
+    border-color: @accent-blue;
+    background-color: transparent;
+    text-color: @fg-primary;
+    cursor: "default";
 }
 
 element {
-    children: [element-icon, element-text];
-    border-radius: 6px;
-    padding: 2px;
+    enabled: true;
+    spacing: 12px;
+    margin: 0px;
+    padding: 8px 12px;
+    border: 0px solid;
+    border-radius: 8px;
+    border-color: @accent-blue;
+    background-color: transparent;
+    text-color: @fg-secondary;
+    cursor: pointer;
+    
+    children: ["element-icon", "element-text"];
 }
 
-element selected {
-    background-color: @bg-alt;
-    border-radius: 6px;
+element normal.normal {
+    background-color: transparent;
+    text-color: @fg-secondary;
+}
+
+element normal.urgent {
+    background-color: @bg-urgent;
+    text-color: @bg-primary;
+}
+
+element normal.active {
+    background-color: @accent-green;
+    text-color: @bg-primary;
+}
+
+element selected.normal {
+    background-color: @bg-selected;
+    text-color: @fg-primary;
+    border: 1px solid;
+    border-color: @accent-blue;
+}
+
+element selected.urgent {
+    background-color: @accent-red;
+    text-color: @bg-primary;
+}
+
+element selected.active {
+    background-color: @accent-cyan;
+    text-color: @bg-primary;
+}
+
+element alternate.normal {
+    background-color: transparent;
+    text-color: @fg-secondary;
+}
+
+element alternate.urgent {
+    background-color: transparent;
+    text-color: @accent-red;
+}
+
+element alternate.active {
+    background-color: transparent;
+    text-color: @accent-green;
 }
 
 element-icon {
-    padding: 10px 10px;
-    size: 20px;
+    background-color: transparent;
+    text-color: inherit;
+    size: 24px;
+    cursor: inherit;
+    padding: 0px 8px 0px 0px;
 }
 
 element-text {
-    padding: 10px 0;
+    background-color: transparent;
+    text-color: inherit;
+    highlight: bold;
+    cursor: inherit;
+    vertical-align: 0.5;
+    horizontal-align: 0.0;
+    padding: 2px 0px;
 }
 
-element-text selected {
-    text-color: @fg-alt;
-} 
+message {
+    enabled: true;
+    margin: 8px 0px 0px 0px;
+    padding: 12px;
+    border: 0px solid;
+    border-radius: 8px;
+    border-color: @accent-blue;
+    background-color: @bg-secondary;
+    text-color: @fg-primary;
+}
+
+textbox {
+    background-color: transparent;
+    text-color: @fg-primary;
+    vertical-align: 0.5;
+    horizontal-align: 0.0;
+    highlight: none;
+}
