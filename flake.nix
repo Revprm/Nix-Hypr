@@ -13,9 +13,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    packet-tracer-binaries = {
+      url =
+        "path:/home/rev/MyOSConfigs/binaries"; # or absolute path like "path:/home/rev/NixOS-Hyprland/binaries"
+      flake = false; # treat as raw source, not a flake
+    };
+
   };
 
-  outputs = inputs@{ self, nixpkgs, ... }:
+  outputs = inputs@{ self, nixpkgs, packet-tracer-binaries, ... }:
     let
       system = "x86_64-linux";
       host = "prm"; # Change this to your hostname
@@ -33,6 +39,7 @@
             inherit inputs;
             inherit username;
             inherit host;
+            inherit packet-tracer-binaries;
           };
           modules = [
             ./hosts/${host}/config.nix
