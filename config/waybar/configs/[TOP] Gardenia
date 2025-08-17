@@ -11,25 +11,25 @@
   "$HOME/.config/waybar/ModulesWorkspaces",
   "$HOME/.config/waybar/ModulesCustom",
   "$HOME/.config/waybar/ModulesGroups",
-  "$HOME/.config/waybar/UserModules",
+  "$HOME/.config/waybar/UserModules"
   ],
 "layer": "top",
-//"mode": "dock",
+// "mode": "dock",
 "exclusive": true,
 "passthrough": false,
 "position": "top",
-"spacing": 7,
+"spacing": 5,
 "fixed-center": false,
 "ipc": true,
 "margin-top": 5,
 //"margin-bottom": 5,
-"width": 1050,
+"width": 1000,
 	
 "modules-left": [
 	"clock#5", 
 	"custom/separator#line",
-	"mpris", 
-	"group/notify",
+	"custom/music", 
+	"group/notify"
 	],
 	  
 "modules-center": [
@@ -43,6 +43,6 @@
 	"group/mobo_drawer", 
 	"group/laptop",
 	"group/power"
-	],
-
+	]
 }
+

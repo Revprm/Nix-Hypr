@@ -142,7 +142,7 @@
     
     // Enhanced clock with multiple formats
     "clock": {
-        "timezone": "Asia/Dubai",
+        "timezone": "Asia/Jakarta",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format": " {:%H:%M}",
         "format-alt": " {:%A, %B %d, %Y}",

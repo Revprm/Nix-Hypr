@@ -161,6 +161,7 @@ tooltip label {
 #custom-hint,
 #custom-hypridle,
 #custom-menu,
+#custom-music,
 #custom-playerctl,
 #custom-power_vertical,
 #custom-power,
@@ -227,6 +228,10 @@ tooltip label {
         color: #1a1b26;
         box-shadow: 0 0 16px rgba(247, 118, 142, 0.8);
     }
+}
+
+#custom-music {
+    color: #7aa2f7;
 }
 
 #custom-lock,

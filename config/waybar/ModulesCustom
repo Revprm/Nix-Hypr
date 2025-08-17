@@ -272,5 +272,19 @@
 "custom/arrow10": {
 	"format": "",
 	"tooltip": false
+},
+
+"custom/music": {
+    "return-type": "json",
+    "format": "{}",
+    "escape": true,
+    "exec": "$HOME/.config/hypr/scripts/music.sh",
+    "on-click-middle": "playerctl play-pause",
+	"on-click": "playerctl previous",
+	"on-click-right": "playerctl next",
+    "max-length": 40,
+    "min-length": 20
 }
+
+
 }
