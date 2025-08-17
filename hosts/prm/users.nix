@@ -12,6 +12,9 @@ let
 
 in {
   imports = [ ./modules/zsh.nix ];
+
+  nixpkgs.config.permittedInsecurePackages = [ "libxml2-2.13.8" ];
+
   users = {
     mutableUsers = true;
     users."${username}" = {
@@ -41,5 +44,12 @@ in {
 
   environment.shells = with pkgs; [ zsh ];
   environment.systemPackages = with pkgs; [ lsd fzf ];
+
+  security.wrappers.ubridge = {
+    source = "${pkgs.ubridge}/bin/ubridge";
+    owner = "root";
+    group = "root";
+    capabilities = "cap_net_admin,cap_net_raw+ep";
+  };
 
 }

@@ -7,6 +7,7 @@
     nmap
     burpsuite
     tcpdump
+    inetutils
 
     # File Analysis
     exiftool
@@ -35,5 +36,13 @@
 
     # Audio Analysis
     sonic-visualiser
+
+    # Network Stuff
+    gns3-gui
+    gns3-server
+    (pkgs.ciscoPacketTracer8.override {
+      packetTracerSource = ../../../binaries/Packet_Tracer822_amd64_signed.deb;
+    })
+
   ];
 }
