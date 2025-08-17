@@ -18,12 +18,12 @@
 "exclusive": true,
 "passthrough": false,
 "position": "top",
-"spacing": 5,
+"spacing": 7,
 "fixed-center": false,
 "ipc": true,
 "margin-top": 5,
 //"margin-bottom": 5,
-"width": 1200,
+"width": 1050,
 	
 "modules-left": [
 	"clock#5", 

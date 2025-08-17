@@ -146,8 +146,9 @@
 },
 
 "clock#5": {
+    "interval": 1,
     //"format": "{:%A, %I:%M %P}", // AM PM format
-    "format": "{:%a %d | %H:%M}", // 24H
+    "format": "{:%a %d | %H:%M:%S}", // 24H
 	"format-alt": "{:%A, %d %B, %Y (%R)}",
 	"tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
 },
