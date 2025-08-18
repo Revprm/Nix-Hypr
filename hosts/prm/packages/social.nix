@@ -5,5 +5,6 @@
     # Communication
     zapzap
     zoom-us
+    betterdiscordctl
   ];
 }
