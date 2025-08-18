@@ -1,25 +1,21 @@
-/* ---- 💫 https://github.com/JaKooLit 💫 ---- */
-/* Vertical Tokyo Night (Enhanced) */
-/* Improved design with better consistency and modern touches */
+/* Tokyo Night (GTK/Waybar-compatible) - Thinner style.css */
 
+/* Base font & safety fallbacks */
 * {
-    font-family: "JetBrainsMono Nerd Font";
-    font-weight: bold;
-    min-height: 0;
-    /* set font-size to 100% if font scaling is set to 1.00 using nwg-look */
+    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", "Fira Mono", "DejaVu Sans Mono", monospace;
+    font-weight: 600;
     font-size: 97%;
-    font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
 }
 
+/* Waybar window - reduced padding for thinner bar */
 window#waybar {
     background-color: rgba(26, 27, 38, 0.95);
-    /* Semi-transparent base */
     border-radius: 12px;
     border: 1px solid rgba(122, 162, 247, 0.2);
-    /* Subtle border */
     transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    padding: 2px 4px;
+    padding: 1px 4px; /* Reduced from 2px 4px */
+    animation: fadeIn 0.5s ease-out;
 }
 
 window#waybar.hidden {
@@ -29,10 +25,11 @@ window#waybar.hidden {
 window#waybar.empty,
 window#waybar.empty #window {
     background-color: transparent;
-    padding: 0px;
-    border: 0px;
+    padding: 0;
+    border: 0;
 }
 
+/* Tooltips */
 tooltip {
     background: rgba(26, 27, 38, 0.98);
     opacity: 1;
@@ -47,19 +44,20 @@ tooltip label {
     font-weight: 600;
 }
 
-/* Workspaces and Taskbar Buttons */
+/* Workspaces and taskbar buttons - reduced padding */
 #taskbar button,
 #workspaces button {
     color: #565f89;
     background-color: transparent;
-    padding: 4px 8px;
+    padding: 2px 6px; /* Reduced from 4px 8px */
     margin: 1px;
-    border-radius: 8px;
+    border-radius: 12px;
     transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
     border: 1px solid transparent;
     min-width: 16px;
 }
 
+/* Hover / active / focused states */
 #taskbar button:hover,
 #workspaces button:hover {
     background-color: rgba(255, 158, 100, 0.15);
@@ -84,6 +82,7 @@ tooltip label {
     box-shadow: 0 4px 12px rgba(187, 154, 247, 0.2);
 }
 
+/* Urgent & persistent */
 #workspaces button.urgent {
     color: #f7768e;
     background-color: rgba(247, 118, 142, 0.25);
@@ -96,36 +95,17 @@ tooltip label {
     opacity: 0.7;
 }
 
-@keyframes urgent-blink {
-    from {
-        background-color: rgba(247, 118, 142, 0.25);
-        box-shadow: 0 0 0 0 rgba(247, 118, 142, 0.4);
-    }
-
-    to {
-        background-color: rgba(247, 118, 142, 0.4);
-        box-shadow: 0 0 0 4px rgba(247, 118, 142, 0);
-    }
-}
-
-/* Module Grouping */
+/* Module grouping containers - reduced padding and margins */
 .modules-left,
 .modules-center,
 .modules-right {
-    background-color: transparent;
+    background: transparent;
     border: none;
-    padding: 2px 8px;
-    margin: 4px 8px;
-    border-radius: 0px;
-    box-shadow: none;
+    padding: 1px 6px; /* Reduced from 2px 8px */
+    margin: 2px 6px; /* Reduced from 4px 8px */
 }
 
-.modules-left,
-.modules-right {
-    border: none;
-}
-
-/* All Modules Base Styling */
+/* Base styling for many modules - reduced padding */
 #backlight,
 #backlight-slider,
 #battery,
@@ -173,184 +153,90 @@ tooltip label {
 #custom-tty,
 #custom-updater,
 #custom-hyprpicker,
-#custom-weather,
-#custom-weather.clearNight,
-#custom-weather.cloudyFoggyDay,
-#custom-weather.cloudyFoggyNight,
-#custom-weather.default,
-#custom-weather.rainyDay,
-#custom-weather.rainyNight,
-#custom-weather.severe,
-#custom-weather.showyIcyDay,
-#custom-weather.snowyIcyNight,
-#custom-weather.sunnyDay {
+#custom-weather {
     opacity: 1;
-    padding: 4px 8px;
-    margin: 1px 3px;
+    padding: 2px 6px; /* Reduced from 4px 8px */
+    margin: 1px 2px; /* Reduced from 1px 3px */
     border-radius: 8px;
     transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
     font-weight: 600;
 }
 
-/* Module-Specific Colors */
-#idle_inhibitor {
-    color: #bb9af7;
-}
-
+/* Specific module colors */
+#idle_inhibitor { color: #bb9af7; }
 #idle_inhibitor.activated,
-#custom-hypridle.notactive {
-    color: #39FF14;
-    text-shadow: 0 0 8px rgba(57, 255, 20, 0.6);
-}
+#custom-hypridle.notactive { color: #39FF14; text-shadow: 0 0 8px rgba(57,255,20,0.6); }
 
-#mpris {
-    color: #bb9af7;
-}
+#mpris { color: #bb9af7; }
 
-#battery {
-    color: #9ece6a;
-}
-
+#battery { color: #9ece6a; }
 #battery.critical:not(.charging) {
     color: #f7768e;
-    background-color: rgba(247, 118, 142, 0.2);
+    background-color: rgba(247,118,142,0.2);
     animation: critical-blink 0.8s ease-in-out infinite alternate;
 }
 
-@keyframes critical-blink {
-    from {
-        background-color: rgba(247, 118, 142, 0.2);
-        color: #f7768e;
-    }
-
-    to {
-        background-color: #f7768e;
-        color: #1a1b26;
-        box-shadow: 0 0 16px rgba(247, 118, 142, 0.8);
-    }
-}
-
-#custom-music {
-    color: #7aa2f7;
-}
+#custom-music { color: #7aa2f7; }
 
 #custom-lock,
 #custom-power {
     color: #f7768e;
-    font-weight: bolder;
-    background-color: rgba(247, 118, 142, 0.1);
-    border: 1px solid rgba(247, 118, 142, 0.3);
+    font-weight: 700;
+    background-color: rgba(247,118,142,0.1);
+    border: 1px solid rgba(247,118,142,0.3);
 }
-
 #custom-lock:hover,
 #custom-power:hover {
-    background-color: rgba(247, 118, 142, 0.2);
-    box-shadow: 0 4px 12px rgba(247, 118, 142, 0.3);
+    background-color: rgba(247,118,142,0.2);
+    box-shadow: 0 4px 12px rgba(247,118,142,0.3);
 }
 
-#network {
-    color: #bb9af7;
-}
-
+#network { color: #bb9af7; }
 #network.disconnected,
-#network.disabled {
-    color: #565f89;
-    opacity: 0.6;
-}
+#network.disabled { color: #565f89; opacity: 0.6; }
 
-#backlight {
-    color: #ff9e64;
-}
+#backlight { color: #ff9e64; }
 
 #custom-weather {
     color: #9ece6a;
-    background-color: rgba(158, 206, 106, 0.1);
-    border: 1px solid rgba(158, 206, 106, 0.2);
+    background-color: rgba(158,206,106,0.1);
+    border: 1px solid rgba(158,206,106,0.2);
 }
 
-#custom-menu {
-    color: #7aa2f7;
-    font-weight: bolder;
-}
+#custom-menu { color: #7aa2f7; font-weight: 700; }
 
-#pulseaudio {
-    color: #7aa2f7;
-}
-
-#pulseaudio.bluetooth {
-    color: #bb9af7;
-}
-
-#pulseaudio.muted {
-    color: #f7768e;
-    opacity: 0.7;
-}
+#pulseaudio { color: #7aa2f7; }
+#pulseaudio.bluetooth { color: #bb9af7; }
+#pulseaudio.muted { color: #f7768e; opacity: 0.7; }
 
 #clock {
     color: #7aa2f7;
-    font-weight: bold;
-    background-color: rgba(122, 162, 247, 0.1);
+    font-weight: 700;
+    background-color: rgba(122,162,247,0.1);
     border: 1px solid rgba(122, 162, 247, 0.2);
 }
 
-#cpu {
-    color: #9ece6a;
-}
+#cpu { color: #9ece6a; }
+#memory, #custom-keyboard { color: #7dcfff; }
+#disk { color: #7aa2f7; }
+#temperature { color: #2ac3de; }
+#temperature.critical { background-color: rgba(247,118,142,0.3); color: #f7768e; }
 
-#memory,
-#custom-keyboard {
-    color: #7dcfff;
-}
-
-#disk {
-    color: #7aa2f7;
-}
-
-#temperature {
-    color: #2ac3de;
-}
-
-#temperature.critical {
-    background-color: rgba(247, 118, 142, 0.3);
-    color: #f7768e;
-}
-
-#tray {
-    padding: 2px 6px;
-}
-
-#tray>.passive {
-    -gtk-icon-effect: dim;
-}
-
-#tray>.needs-attention {
+#tray { padding: 1px 4px; } /* Reduced from 2px 6px */
+#tray > .passive { -gtk-icon-effect: dim; }
+#tray > .needs-attention {
     -gtk-icon-effect: highlight;
-    background-color: rgba(255, 158, 100, 0.2);
-    border-radius: 8px;
+    background-color: rgba(255,158,100,0.2);
+    border-radius: 15px;
 }
 
-#keyboard-state {
-    color: #ff9e64;
-}
+#keyboard-state { color: #ff9e64; }
+#custom-cava_mviz { color: #bb9af7; }
+#custom-updater { color: #f7768e; }
+#custom-light_dark { color: #7aa2f7; }
+#window { color: #bb9af7; font-weight: 600; }
 
-#custom-cava_mviz {
-    color: #bb9af7;
-}
-
-#custom-updater {
-    color: #f7768e;
-}
-
-#custom-light_dark {
-    color: #7aa2f7;
-}
-
-#window {
-    color: #bb9af7;
-    font-weight: 600;
-}
-
-/* Sliders */
+/* Sliders — keep sensible sizes and rounded corners */
 #backlight-slider slider,
 #pulseaudio-slider slider {
     min-height: 8px;
@@ -378,7 +264,7 @@ tooltip label {
     box-shadow: 0 0 8px rgba(122, 162, 247, 0.4);
 }
 
-/* Hover effects for all interactive elements */
+/* Hover effects for interactive elements */
 #backlight:hover,
 #battery:hover,
 #bluetooth:hover,
@@ -395,17 +281,31 @@ tooltip label {
     background-color: rgba(122, 162, 247, 0.1);
 }
 
-/* Smooth animations */
+/* Animations */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
 
+@keyframes urgent-blink {
+    from {
+        background-color: rgba(247,118,142,0.25);
+        box-shadow: 0 0 0 0 rgba(247,118,142,0.4);
+    }
     to {
-        opacity: 1;
+        background-color: rgba(247,118,142,0.4);
+        box-shadow: 0 0 0 4px rgba(247,118,142,0);
     }
 }
 
-window#waybar {
-    animation: fadeIn 0.5s ease-out;
+@keyframes critical-blink {
+    from {
+        background-color: rgba(247,118,142,0.2);
+        color: #f7768e;
+    }
+    to {
+        background-color: #f7768e;
+        color: #1a1b26;
+        box-shadow: 0 0 16px rgba(247,118,142,0.8);
+    }
 }
