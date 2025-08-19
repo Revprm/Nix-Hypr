@@ -121,17 +121,6 @@ if $DRY_RUN; then
     log "${NOTE} Running in dry-run mode. No changes will be made."
 fi
 
-# Make a backup of flake.lock if present
-if [ -f flake.lock ]; then
-    BACKUP_NAME="flake.lock.bak.$(date +%Y%m%d_%H%M%S)"
-    if $DRY_RUN; then
-        log "${NOTE} Would create backup: $BACKUP_NAME"
-    else
-        cp -a flake.lock "$BACKUP_NAME"
-        log "${OK} Backed up flake.lock -> $BACKUP_NAME"
-    fi
-fi
-
 # Build nix flake update command
 FLAKE_UPDATE_CMD=(nix flake update)
 if [ -n "$UPDATE_INPUTS" ]; then
