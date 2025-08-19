@@ -5,5 +5,6 @@
     # Anime & Manga
     ani-cli
     manga-tui
+    spicetify-cli
   ];
 }

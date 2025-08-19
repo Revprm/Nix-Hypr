@@ -24,7 +24,6 @@ in {
     htop
     obs-studio
     postman
-    spicetify-cli
     texliveFull
     p7zip
 
