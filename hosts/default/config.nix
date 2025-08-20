@@ -5,16 +5,8 @@ in {
     ./hardware.nix
     ./users.nix
     ./packages-fonts.nix
-    ./modules/boot.nix
-    ./modules/networking.nix
-    ./modules/system-services.nix
-    ./modules/security.nix
-    ../../modules/amd-drivers.nix
-    ../../modules/nvidia-drivers.nix
-    ../../modules/nvidia-prime-drivers.nix
-    ../../modules/intel-drivers.nix
-    ../../modules/vm-guest-services.nix
-    ../../modules/local-hardware-clock.nix
+    ./modules/default.nix
+    ../../modules/default.nix
   ];
   # Other configurations that don't fit into a module
   drivers = {
