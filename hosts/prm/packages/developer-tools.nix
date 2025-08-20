@@ -13,6 +13,7 @@ let
       flask
       pillow
       pyinstaller
+      scapy
     ]);
 in {
   developer-packages = with pkgs; [
