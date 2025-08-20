@@ -2,12 +2,12 @@
 
 {
   imports = [
-    ./amd-drivers.nix
-    ./intel-drivers.nix
-    ./local-hardware-clock.nix
-    ./nvidia-drivers.nix
-    ./nvidia-prime-drivers.nix
-    ./quickshell.nix
-    ./vm-guest-services.nix
+    ./drivers/amd-drivers.nix
+    ./drivers/nvidia-drivers.nix
+    ./drivers/intel-drivers.nix
+    ./drivers/nvidia-prime-drivers.nix
+    ./hyprland/quickshell.nix
+    ./services/local-hardware-clock.nix
+    ./services/vm-guest-services.nix
   ];
 }
