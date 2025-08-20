@@ -12,6 +12,7 @@ let
       scikit-learn
       flask
       pillow
+      pyinstaller
     ]);
 in {
   developer-packages = with pkgs; [
@@ -26,6 +27,9 @@ in {
     postman
     texliveFull
     p7zip
+    openssl
+    pkg-config
+    cdrtools
 
     # NodeJS Ecosystem
     nodejs

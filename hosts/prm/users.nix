@@ -2,11 +2,7 @@
 let
   inherit (import ./variables.nix) gitUsername;
   # Import package modules
-  developer = import ./packages/developer-tools.nix { inherit pkgs; };
-  security = import ./packages/security-tools.nix { inherit pkgs inputs; };
-  entertainment = import ./packages/entertainment.nix { inherit pkgs; };
-  social = import ./packages/social.nix { inherit pkgs; };
-  games = import ./packages/games.nix { inherit pkgs; };
+  allPackages = import ./packages/default.nix { inherit pkgs inputs; };
 in {
   imports = [ ./modules/zsh.nix ];
   nixpkgs.config.permittedInsecurePackages = [ "libxml2-2.13.8" ];
@@ -28,9 +24,7 @@ in {
         "docker"
       ];
       # Modularized user packages
-      packages = developer.developer-packages ++ security.security-packages
-        ++ entertainment.entertainment-packages ++ social.social-packages
-        ++ games.games-packages;
+      packages = allPackages.all-packages;
     };
     defaultUserShell = pkgs.zsh;
   };

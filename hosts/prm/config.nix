@@ -5,18 +5,8 @@ in {
     ./hardware.nix
     ./users.nix
     ./packages-fonts.nix
-    ./modules/power-management.nix
-    ./modules/boot.nix
-    ./modules/networking.nix
-    ./modules/system-services.nix
-    ./modules/security.nix
-    ./modules/virtualization.nix
-    ../../modules/amd-drivers.nix
-    ../../modules/nvidia-drivers.nix
-    ../../modules/nvidia-prime-drivers.nix
-    ../../modules/intel-drivers.nix
-    ../../modules/vm-guest-services.nix
-    ../../modules/local-hardware-clock.nix
+    ./modules/default.nix
+    ../../modules/default.nix
   ];
   drivers = {
     amdgpu.enable = false;
