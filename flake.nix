@@ -1,4 +1,3 @@
-# ./flake.nix
 {
   description = "Rev's NixOS configuration";
 
