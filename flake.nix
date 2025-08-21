@@ -35,7 +35,7 @@
 
             ./hosts/${host}/config.nix
             inputs.distro-grub-themes.nixosModules.${system}.default
-            ./modules/quickshell.nix
+            ./modules/hyprland/quickshell.nix
           ];
         };
       };
