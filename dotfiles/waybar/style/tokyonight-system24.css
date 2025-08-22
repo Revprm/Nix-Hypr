@@ -1,0 +1,75 @@
+/* Tokyo Night - Minimal & Rounded */
+@define-color bg0 #1a1b26;
+@define-color bg1 #16161e;
+@define-color bg2 #24283b;
+@define-color fg0 #c0caf5;
+@define-color fg1 #a9b1d6;
+@define-color red #f7768e;
+@define-color green #9ece6a;
+@define-color blue #7aa2f7;
+@define-color purple #bb9af7;
+
+* {
+    border: none;
+    border-radius: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: bold;
+    min-height: 0;
+}
+
+window#waybar {
+    background: @bg0;
+    color: @fg0;
+    border-radius: 15px;
+    opacity: 0.95;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+    background: transparent;
+}
+
+#workspaces button {
+    padding: 2px 8px;
+    margin: 2px;
+    background: transparent;
+    color: @fg1;
+}
+
+#workspaces button:hover {
+    background: @bg2;
+}
+
+#workspaces button.active {
+    color: @blue;
+}
+
+#window,
+#clock,
+#cpu,
+#memory,
+#temperature,
+#network,
+#pulseaudio,
+#battery,
+#tray,
+#custom-power {
+    background: @bg1;
+    padding: 4px 12px;
+    margin: 3px;
+    color: @fg0;
+}
+
+#cpu { color: @green; }
+#memory { color: @purple; }
+#battery.charging { color: @green; }
+#battery.critical:not(.charging) { color: @red; }
+#pulseaudio.muted { color: @red; }
+#network.disconnected { color: @red; }
+
+#custom-power:hover {
+    background: @red;
+    color: @bg0;
+}

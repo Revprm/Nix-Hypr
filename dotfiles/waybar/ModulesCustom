@@ -282,7 +282,7 @@
     "on-click-middle": "playerctl play-pause",
 	"on-click": "playerctl previous",
 	"on-click-right": "playerctl next",
-    "max-length": 40,
+    "max-length": 30,
     "min-length": 20
 }
 

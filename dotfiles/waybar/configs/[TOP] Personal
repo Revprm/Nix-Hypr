@@ -1,17 +1,8 @@
 {
-  "include": [
-    "$HOME/.config/waybar/Modules",
-    "$HOME/.config/waybar/ModulesWorkspaces",
-    "$HOME/.config/waybar/ModulesCustom",
-    "$HOME/.config/waybar/ModulesGroups",
-    "$HOME/.config/waybar/UserModules"
-  ],
   "layer": "top",
-  "exclusive": true,
-  "passthrough": false,
   "position": "top",
   "spacing": 5,
-  "fixed-center": false,
+  "fixed-center": true,
   "ipc": true,
   "margin-top": 5,
   "modules-left": [
@@ -24,7 +15,7 @@
     "pulseaudio#1",
     "backlight#2",
     "battery",
-    "clock#5",
+    "clock",
     "tray",
     "custom/lock",
     "custom/power"
@@ -50,11 +41,24 @@
     "on-click": "playerctl play-pause",
     "max-length": 50
   },
-  "clock#5": {
-    "timezone": "Asia/Dubai",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format-alt": " {:%d/%m/%Y}",
-    "format": " {:%H:%M}"
+  "clock": {
+    "interval": 1,
+    "format": " {:%H:%M:%S}",
+    "format-alt": " {:%H:%M   %Y, %d %B, %A}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+        "mode": "year",
+        "mode-mon-col": 3,
+        "weeks-pos": "right",
+        "on-scroll": 1,
+        "format": {
+            "months": "<span color='#ffead3'><b>{}</b></span>",
+            "days": "<span color='#ecc6d9'><b>{}</b></span>",
+            "weeks": "<span color='#99ffdd'><b>W{:%V}</b></span>",
+            "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+            "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+        }
+    }
   },
   "backlight#2": {
     "device": "intel_backlight",
