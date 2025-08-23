@@ -93,17 +93,7 @@ in {
     yad
     yt-dlp
     openvpn
-
     regreet
-
-    kdePackages.sddm
-
-    (catppuccin-sddm.override {
-      flavor = "mocha";
-      font = "Noto Sans";
-      fontSize = "20";
-      loginBackground = true;
-    })
 
     mangohud
     protonup-qt
