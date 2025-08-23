@@ -94,6 +94,8 @@ in {
     yt-dlp
     openvpn
 
+    regreet
+
     kdePackages.sddm
 
     (catppuccin-sddm.override {
