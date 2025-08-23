@@ -61,7 +61,7 @@ in {
     obsidian
     pandoc
     typst
-
+    wpsoffice
     # Add Database if Needed (me personally uses docker for databases)
   ];
 }
