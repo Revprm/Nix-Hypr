@@ -1,44 +1,44 @@
 /*
 *
-* Tokyo Night palette
+* Tokyo Night TUI Style palette
 *
 */
 
-@define-color base      #1a1b26;
-@define-color mantle    #24283b;
-@define-color crust     #1f2335;
+@define-color base #1a1b26;
+@define-color mantle #24283b;
+@define-color crust #1f2335;
 
-@define-color text      #c0caf5;
-@define-color subtext0  #a9b1d6;
-@define-color subtext1  #9aa5ce;
+@define-color text #c0caf5;
+@define-color subtext0 #a9b1d6;
+@define-color subtext1 #9aa5ce;
 
-@define-color surface0  #3b4261;
-@define-color surface1  #414868;
-@define-color surface2  #565f89;
+@define-color surface0 #3b4261;
+@define-color surface1 #414868;
+@define-color surface2 #565f89;
 
-@define-color overlay0  #6c7086;
-@define-color overlay1  #7f849c;
-@define-color overlay2  #9399b2;
+@define-color overlay0 #6c7086;
+@define-color overlay1 #7f849c;
+@define-color overlay2 #9399b2;
 
-@define-color blue      #7aa2f7;
-@define-color lavender  #b4befe;
-@define-color sapphire  #7dcfff;
-@define-color sky       #89dceb;
-@define-color teal      #73daca;
-@define-color green     #9ece6a;
-@define-color yellow    #e0af68;
-@define-color peach     #ff9e64;
-@define-color maroon    #f7768e;
-@define-color red       #f7768e;
-@define-color mauve     #bb9af7;
-@define-color pink      #f5c2e7;
-@define-color flamingo  #f2cdcd;
+@define-color blue #7aa2f7;
+@define-color lavender #b4befe;
+@define-color sapphire #7dcfff;
+@define-color sky #89dceb;
+@define-color teal #73daca;
+@define-color green #9ece6a;
+@define-color yellow #e0af68;
+@define-color peach #ff9e64;
+@define-color maroon #f7768e;
+@define-color red #f7768e;
+@define-color mauve #bb9af7;
+@define-color pink #f5c2e7;
+@define-color flamingo #f2cdcd;
 @define-color rosewater #f5e0dc;
 
-
 * {
-  font-family: "Product Sans";
+  font-family: "JetBrains Mono", "Fira Code", "Source Code Pro", monospace;
   background-clip: border-box;
+  font-weight: 500;
 }
 
 label {
@@ -46,48 +46,69 @@ label {
 }
 
 .notification {
-  border: none;
-  box-shadow: none;
-  border-radius: 4px;
-  background: inherit;
+  border: 2px solid @surface1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  background: @base;
+  margin: 8px;
 }
 
 .notification button {
   background: transparent;
-  border-radius: 0px;
-  border: none;
-  margin: 0px;
-  padding: 0px;
+  border-radius: 8px;
+  border: 1px solid @surface0;
+  margin: 4px;
+  padding: 6px 12px;
+  color: @text;
+  font-family: monospace;
+  transition: all 0.2s ease;
 }
 
 .notification button:hover {
   background: @surface0;
+  border-color: @blue;
+  color: @blue;
+  box-shadow: 0 2px 8px rgba(122, 162, 247, 0.3);
 }
 
 .notification-content {
-  min-height: 64px;
-  margin: 10px;
-  padding: 0px;
-  border-radius: 0px;
+  min-height: 72px;
+  margin: 12px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid @surface0;
+  background: @mantle;
 }
 
 .close-button {
-  background: transparent;
-  color: transparent;
+  background: @surface0;
+  color: @text;
+  border: 1px solid @surface1;
+  border-radius: 6px;
+  min-width: 24px;
+  min-height: 24px;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.close-button:hover {
+  background: @red;
+  color: @base;
+  border-color: @red;
 }
 
 .notification-default-action,
 .notification-action {
-  background: transparent;
-  border: none;
+  background: @surface0;
+  border: 1px solid @surface1;
+  color: @text;
+  font-family: monospace;
 }
-
 
 .notification-default-action {
-  border-radius: 4px;
+  border-radius: 10px;
 }
 
-/* When alternative actions are visible */
 .notification-default-action:not(:only-child) {
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
@@ -95,309 +116,446 @@ label {
 
 .notification-action {
   border-radius: 0px;
-  padding: 2px;
+  padding: 8px;
   color: @text;
+  border-top: none;
 }
 
-/* add bottom border radius to eliminate clipping */
+.notification-action:hover {
+  background: @blue;
+  color: @base;
+}
+
 .notification-action:first-child {
-  border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 8px;
 }
 
 .notification-action:last-child {
-  border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 8px;
 }
 
-/*** Notification ***/
-/* Notification header */
+/*** TUI Style Headers ***/
 .summary {
-  color: @text;
+  color: @blue;
   font-size: 14px;
-  padding: 0px;
+  font-weight: bold;
+  padding: 4px 0px;
+  font-family: monospace;
 }
 
 .time {
   color: @subtext0;
-  font-size: 12px;
+  font-size: 11px;
   text-shadow: none;
-  margin: 0px 0px 0px 0px;
+  margin: 0px;
   padding: 2px 0px;
+  font-family: monospace;
 }
 
 .body {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 400;
   color: @subtext1;
   text-shadow: none;
-  margin: 0px 0px 0px 0px;
+  margin: 4px 0px;
+  font-family: monospace;
+  line-height: 1.4;
 }
 
 .body-image {
-  border-radius: 4px;
+  border-radius: 8px;
+  border: 1px solid @surface1;
 }
 
-/* The "Notifications" and "Do Not Disturb" text widget */
 .top-action-title {
   color: @text;
   text-shadow: none;
+  font-family: monospace;
+  font-weight: bold;
 }
 
-/* Control center */
-
+/* TUI Style Control Center */
 .control-center {
-  background: alpha(@crust, .80);
-  border-radius: 15px;
-  border: 0px solid @blue;
-  box-shadow: 0 0 10px 0 rgba(0,0,0,.80);
-  margin: 10px;
-  padding: 4px;
+  background: @base;
+  border-radius: 16px;
+  border: 2px solid @surface1;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+  margin: 12px;
+  padding: 16px;
 }
 
 .control-center-list {
-  background: alpha(@crust, .80);
+  background: transparent;
   min-height: 5px;
   border-top: none;
-  border-radius: 0px 0px 4px 4px;
+  border-radius: 0px;
 }
 
 .control-center-list-placeholder,
 .notification-group-icon,
 .notification-group {
   color: alpha(@text, 0.50);
+  font-family: monospace;
 }
 
 .notification-group {
   opacity: 1.0;
   box-shadow: none;
+  border: 1px solid @surface0;
+  border-radius: 10px;
+  background: @mantle;
+  margin: 4px 0px;
 }
 
-.notification-group > box {
+.notification-group>box {
   all: unset;
   background: transparent;
-  padding: 4px;
+  padding: 8px;
   margin: 0px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   box-shadow: none;
 }
 
 .notification-row {
   outline: none;
-  transition: all 1s ease;
-  background: alpha(@mantle, .80);
-  border: 0px solid @crust;
-  margin: 10px 5px 0px 5px;
-  border-radius: 14px;
+  transition: all 0.3s ease;
+  background: @mantle;
+  border: 1px solid @surface0;
+  margin: 8px 4px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .notification-row:focus,
 .notification-row:hover {
-  box-shadow: none;
+  border-color: @blue;
+  box-shadow: 0 4px 16px rgba(122, 162, 247, 0.2);
+  transform: translateY(-1px);
 }
 
-.control-center-list > row,
-.control-center-list > row:focus,
-.control-center-list > row:hover {
+.control-center-list>row,
+.control-center-list>row:focus,
+.control-center-list>row:hover {
   background: transparent;
   border: none;
   margin: 0px;
-  padding: 5px 10px 5px 10px;
+  padding: 6px 12px;
   box-shadow: none;
 }
 
-.control-center-list > row:last-child {
-  padding: 5px 10px 10px 10px;
+.control-center-list>row:last-child {
+  padding: 6px 12px 12px 12px;
 }
 
-
-/* Window behind control center and on all other monitors */
 .blank-window {
   background: transparent;
 }
 
-/*** Widgets ***/
+/*** TUI Style Widgets ***/
 
-/* Title widget */
 .widget-title {
-  margin: 0px;
-  background: transparent;
-  border-radius: 4px 4px 0px 0px;
-  border-bottom: none;
+  margin: 0px 0px 12px 0px;
+  background: @surface0;
+  border-radius: 10px;
+  border: 1px solid @surface1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-.widget-title > label {
-  margin: 18px 10px;
-  font-size: 20px;
-  font-weight: 500;
+.widget-title>label {
+  margin: 16px 12px;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: monospace;
+  color: @blue;
 }
 
-.widget-title > button {
-  font-weight: 700;
-  padding: 7px 3px;
-  margin-right: 10px;
-  background: transparent;
+.widget-title>button {
+  font-weight: bold;
+  padding: 8px 12px;
+  margin-right: 12px;
+  background: @surface1;
   color: @text;
-  border: none;
-  border-radius: 4px;
-}
-.widget-title > button:hover {
-  background: @base;
+  border: 1px solid @surface2;
+  border-radius: 8px;
+  font-family: monospace;
+  transition: all 0.2s ease;
 }
 
-/* Label widget */
+.widget-title>button:hover {
+  background: @blue;
+  color: @base;
+  border-color: @blue;
+  box-shadow: 0 2px 8px rgba(122, 162, 247, 0.3);
+}
+
 .widget-label {
-  margin: 0px;
-  padding: 0px;
+  margin: 0px 0px 8px 0px;
+  padding: 12px;
   min-height: 5px;
-  background: alpha(@mantle, .80);
-  border-radius: 0px 0px 4px 4px;
-  border-top: none;
-}
-.widget-label > label {
-  font-size: 15px;
-  font-weight: 400;
+  background: @surface0;
+  border-radius: 10px;
+  border: 1px solid @surface1;
 }
 
-/* Menubar */
+.widget-label>label {
+  font-size: 14px;
+  font-weight: bold;
+  font-family: monospace;
+  color: @green;
+}
+
+/* TUI Style Menubar */
 .widget-menubar {
   background: transparent;
   border-top: none;
   border-bottom: none;
+  margin-bottom: 8px;
 }
-.widget-menubar > box > box {
-  margin: 5px 10px 5px 10px;
-  min-height: 40px;
-  border-radius: 4px;
+
+.widget-menubar>box>box {
+  margin: 6px;
+  min-height: 44px;
+  border-radius: 10px;
   background: transparent;
 }
-.widget-menubar > box > box > button {
-  background: alpha(@mantle, .80);
-  min-width: 185px;
-  min-height: 50px;
-  margin-right: 10px;
-  font-size: 14px;
+
+.widget-menubar>box>box>button {
+  background: @surface0;
+  border: 1px solid @surface1;
+  min-width: 180px;
+  min-height: 44px;
+  margin-right: 8px;
+  font-size: 13px;
   padding: 0px;
+  border-radius: 10px;
+  font-family: monospace;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
-.widget-menubar > box > box > button:nth-child(2) {
+
+.widget-menubar>box>box>button:nth-child(2) {
   margin-right: 0px;
 }
-.widget-menubar button:focus {
-  box-shadow: none;
-}
-.widget-menubar button:focus:hover {
-  background: @base;
-  box-shadow: none;
+
+.widget-menubar button:focus,
+.widget-menubar button:hover {
+  background: @blue;
+  color: @base;
+  border-color: @blue;
+  box-shadow: 0 3px 12px rgba(122, 162, 247, 0.3);
+  transform: translateY(-1px);
 }
 
-.widget-menubar > box > revealer > box {
-  margin: 5px 10px 5px 10px;
-  background: alpha(@mantle, .80);
-  border-radius: 4px;
+.widget-menubar>box>revealer>box {
+  margin: 6px;
+  background: @surface0;
+  border: 1px solid @surface1;
+  border-radius: 10px;
 }
-.widget-menubar > box > revealer > box > button {
+
+.widget-menubar>box>revealer>box>button {
   background: transparent;
-  min-height: 50px;
+  min-height: 44px;
   padding: 0px;
-  margin: 5px;
+  margin: 6px;
+  font-family: monospace;
+  border-radius: 8px;
+  transition: all 0.2s ease;
 }
 
-/* Buttons grid */
+.widget-menubar>box>revealer>box>button:hover {
+  background: @surface1;
+  color: @blue;
+}
+
+/* TUI Style Buttons Grid */
 .widget-buttons-grid {
   background: transparent;
   border-top: none;
   border-bottom: none;
-  font-size: 14px;
-  font-weight: 500;
-  margin: 0px;
-  padding: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0px 0px 8px 0px;
+  padding: 8px;
   border-radius: 0px;
 }
 
-.widget-buttons-grid > flowbox > flowboxchild {
-  background: alpha(@mantle, .80);
-  border-radius: 4px;
-  min-height: 50px;
-  min-width: 85px;
-  margin: 5px;
+.widget-buttons-grid>flowbox>flowboxchild {
+  background: @surface0;
+  border: 1px solid @surface1;
+  border-radius: 10px;
+  min-height: 48px;
+  min-width: 120px;
+  margin: 4px;
   padding: 0px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
 }
 
-.widget-buttons-grid > flowbox > flowboxchild > button {
+.widget-buttons-grid>flowbox>flowboxchild:hover {
+  border-color: @blue;
+  box-shadow: 0 4px 12px rgba(122, 162, 247, 0.2);
+  transform: translateY(-1px);
+}
+
+.widget-buttons-grid>flowbox>flowboxchild>button {
   background: transparent;
-  border-radius: 4px;
+  border-radius: 8px;
   margin: 0px;
   border: none;
   box-shadow: none;
+  font-family: monospace;
+  font-weight: 500;
+  color: @text;
+  transition: all 0.2s ease;
 }
 
-
-.widget-buttons-grid > flowbox > flowboxchild > button:hover {
-  background: alpha(@mantle, .80);
+.widget-buttons-grid>flowbox>flowboxchild>button:hover {
+  background: @blue;
+  color: @base;
 }
 
-/* Mpris widget */
+/* TUI Style MPRIS */
 .widget-mpris {
-  padding: 8px;
-  padding-bottom: 15px;
-  margin-bottom: -33px;
+  padding: 12px;
+  margin-bottom: 8px;
 }
-.widget-mpris > box {
-  padding: 0px;
-  margin: -5px 0px -10px 0px;
-  padding: 0px;
-  border-radius: 4px;
-  background: alpha(@mantle, .80);
+
+.widget-mpris>box {
+  padding: 12px;
+  margin: 0px;
+  border-radius: 12px;
+  background: @surface0;
+  border: 1px solid @surface1;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
 }
-.widget-mpris > box > button:nth-child(1),
-.widget-mpris > box > button:nth-child(3) {
+
+.widget-mpris>box>button:nth-child(1),
+.widget-mpris>box>button:nth-child(3) {
   margin-bottom: 0px;
+  opacity: 1;
+  background: @surface1;
+  border: 1px solid @surface2;
+  border-radius: 8px;
+  color: @text;
 }
-.widget-mpris > box > button:nth-child(1) {
-  margin-left: -25px;
-  margin-right: -25px;
-  opacity: 0;
+
+.widget-mpris>box>button:nth-child(1) {
+  margin-left: 8px;
+  margin-right: 8px;
 }
-.widget-mpris > box > button:nth-child(3) {
-  margin-left: -25px;
-  margin-right: -25px;
-  opacity: 0;
+
+.widget-mpris>box>button:nth-child(3) {
+  margin-left: 8px;
+  margin-right: 8px;
 }
 
 .widget-mpris-album-art {
   all: unset;
+  border-radius: 10px;
+  border: 1px solid @surface1;
 }
 
-/* Player button box */
-.widget-mpris > box > carousel > widget > box > box:nth-child(2) {
-  margin: 5px 0px -5px 90px;
+.widget-mpris>box>carousel>widget>box>box:nth-child(2) {
+  margin: 8px 0px 0px 0px;
 }
 
-/* Player buttons */
-.widget-mpris > box > carousel > widget > box > box:nth-child(2) > button {
-  border-radius: 4px;
+.widget-mpris>box>carousel>widget>box>box:nth-child(2)>button {
+  border-radius: 8px;
+  background: @surface1;
+  border: 1px solid @surface2;
+  color: @text;
+  font-family: monospace;
+  margin: 2px;
+  transition: all 0.2s ease;
 }
-.widget-mpris > box > carousel > widget > box > box:nth-child(2) > button:hover {
-  background: alpha(currentColor, 0.1);
+
+.widget-mpris>box>carousel>widget>box>box:nth-child(2)>button:hover {
+  background: @blue;
+  color: @base;
+  border-color: @blue;
+  box-shadow: 0 2px 8px rgba(122, 162, 247, 0.3);
 }
+
 carouselindicatordots {
   opacity: 0;
 }
 
 .widget-mpris-title {
-  color: #eeeeee;
+  color: @blue;
   font-weight: bold;
-  font-size: 1.25rem;
-  text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  font-size: 1.1rem;
+  text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.8);
+  font-family: monospace;
 }
+
 .widget-mpris-subtitle {
-  color: #eeeeee;
-  font-size: 1rem;
-  text-shadow: 0px 0px 3px rgba(0, 0, 0, 1);
+  color: @subtext0;
+  font-size: 0.9rem;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.6);
+  font-family: monospace;
 }
 
 .widget-mpris-player {
   border-radius: 0px;
   margin: 0px;
+  font-family: monospace;
 }
-.widget-mpris-player > box > image {
-  margin: 0px 0px -48px
+
+.widget-mpris-player>box>image {
+  margin: 0px 0px -48px;
+}
+
+/* TUI Style Volume and Backlight */
+.widget-volume,
+.widget-backlight {
+  background: @surface0;
+  border: 1px solid @surface1;
+  border-radius: 10px;
+  margin: 4px 0px;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.widget-volume>box,
+.widget-backlight>box {
+  background: transparent;
+  font-family: monospace;
+}
+
+.widget-volume scale,
+.widget-backlight scale {
+  background: transparent;
+}
+
+.widget-volume scale trough,
+.widget-backlight scale trough {
+  background: @surface1;
+  border-radius: 8px;
+  min-height: 8px;
+  border: 1px solid @surface2;
+}
+
+.widget-volume scale highlight,
+.widget-backlight scale highlight {
+  background: linear-gradient(90deg, @blue, @sapphire);
+  border-radius: 8px;
+  border: none;
+}
+
+.widget-volume scale slider,
+.widget-backlight scale slider {
+  background: @text;
+  border: 2px solid @blue;
+  border-radius: 50%;
+  min-width: 16px;
+  min-height: 16px;
+  margin: -4px;
+}
+
+.widget-volume scale slider:hover,
+.widget-backlight scale slider:hover {
+  background: @blue;
+  box-shadow: 0 2px 8px rgba(122, 162, 247, 0.4);
+}

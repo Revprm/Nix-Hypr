@@ -6,87 +6,88 @@
   "control-center-layer": "top",
   "layer-shell": true,
   "cssPriority": "user",
-  "control-center-margin-top": 5,
-  "control-center-margin-bottom": 0,
-  "control-center-margin-right": 0,
-  "control-center-margin-left": 0,
+  "control-center-margin-top": 10,
+  "control-center-margin-bottom": 10,
+  "control-center-margin-right": 15,
+  "control-center-margin-left": 15,
   "notification-2fa-action": true,
   "notification-inline-replies": false,
-  "notification-icon-size": 24,
-  "notification-body-image-height": 100,
-  "notification-body-image-width": 100,
-  "notification-window-width": 300,
-  "timeout": 6,
-  "timeout-low": 3,
+  "notification-icon-size": 20,
+  "notification-body-image-height": 80,
+  "notification-body-image-width": 80,
+  "notification-window-width": 380,
+  "timeout": 8,
+  "timeout-low": 4,
   "timeout-critical": 0,
   "fit-to-screen": false,
-  "control-center-width": 450,
-  "control-center-height": 720,
+  "control-center-width": 420,
+  "control-center-height": 650,
   "keyboard-shortcuts": true,
   "image-visibility": "when-available",
-  "transition-time": 200,
+  "transition-time": 150,
   "hide-on-clear": false,
   "hide-on-action": true,
   "script-fail-notify": true,
   "widgets": [
-      "dnd",
-      "buttons-grid",
-      "mpris",
-      "volume", 
-      "backlight",
-      "title",
-      "notifications"
+    "dnd",
+    "title",
+    "buttons-grid",
+    "mpris",
+    "volume",
+    "backlight",
+    "notifications"
   ],
   "widget-config": {
-      "title": {
-          "text": "Notifications",
-          "clear-all-button": true,
-          "button-text": "Clear"
-      },
-      "dnd": {
-          "text": "Do Not Disturb"
-      },
-      "label": {
-          "max-lines": 1,
-          "text": "Notification"
-      },
-      "mpris": {
-          "image-size": 10,
-          "image-radius": 0
-      },
-      "volume": {
-          "label": "󰕾"
-      },
-      "backlight": {
-          "label": "󰃟"
-      },
-      "buttons-grid": {
-          "actions": [
-              {
-                  "label": "󰐥",
-                  "command": "bash -c $HOME/.config/hypr/scripts/Wlogout.sh"
-              },
-              {
-                  "label": "󰌾",
-                  "command": "bash -c $HOME/.config/hypr/scripts/LockScreen.sh"
-              },
-              {
-                  "label": "󰍃",
-                  "command": "hyprctl dispatch exit"
-              },
-              {
-                  "label": "󰀝",
-                  "command": "bash -c $HOME/.config/hypr/scripts/AirplaneMode.sh"
-              },
-              {
-                  "label": "󰝟",
-                  "command": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-              },
-              {
-                  "label": "󰂯",
-                  "command": "blueman-manager"
-              }
-          ]
-      }
+    "title": {
+      "text": "╭─ Notifications ─╮",
+      "clear-all-button": true,
+      "button-text": "[ Clear All ]"
+    },
+    "dnd": {
+      "text": "┌─ Do Not Disturb ─┐"
+    },
+    "label": {
+      "max-lines": 1,
+      "text": "├─ System ─┤"
+    },
+    "mpris": {
+      "image-size": 8,
+      "image-radius": 6,
+      "blur": false
+    },
+    "volume": {
+      "label": "├─ 󰕾 Volume ─┤"
+    },
+    "backlight": {
+      "label": "├─ 󰃟 Brightness ─┤"
+    },
+    "buttons-grid": {
+      "actions": [
+        {
+          "label": "[ 󰐥 Power ]",
+          "command": "bash -c $HOME/.config/hypr/scripts/Wlogout.sh"
+        },
+        {
+          "label": "[ 󰌾 Lock ]",
+          "command": "bash -c $HOME/.config/hypr/scripts/LockScreen.sh"
+        },
+        {
+          "label": "[ 󰍃 Exit ]",
+          "command": "hyprctl dispatch exit"
+        },
+        {
+          "label": "[ 󰀝 Airplane ]",
+          "command": "bash -c $HOME/.config/hypr/scripts/AirplaneMode.sh"
+        },
+        {
+          "label": "[ 󰝟 Mute ]",
+          "command": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+        },
+        {
+          "label": "[ 󰂯 Bluetooth ]",
+          "command": "blueman-manager"
+        }
+      ]
+    }
   }
 }
