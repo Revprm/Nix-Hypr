@@ -1,7 +1,7 @@
 /* ---- 💫 https://github.com/JaKooLit 💫 ---- */
 /* Animations Menu */
 
-@import "~/.config/rofi/config.rasi" 
+@import "~/.config/rofi/config.rasi"
 
 /* ---- Mainbox ---- */
 mainbox {
@@ -15,7 +15,7 @@ window {
   height: inherit;
 }
 
-/* ---- Entry ---- */ 
+/* ---- Entry ---- */
 entry {
   width: 43%;
   placeholder: "Search / Choose which Animations to load";
@@ -23,8 +23,8 @@ entry {
 
 /* ---- Listview ---- */
 listview {
-  columns: 2;
-  lines: 7;
+  columns: 1; /* Changed from 2 */
+  lines: 10; /* Changed from 7 */
   fixed-height: false;
   margin: 10px;
   scrollbar: true;

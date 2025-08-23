@@ -1,7 +1,7 @@
 /* ---- 💫 https://github.com/JaKooLit 💫 ---- */
 /* Rofi Beats Config */
 
-@import "~/.config/rofi/config.rasi" 
+@import "~/.config/rofi/config.rasi"
 
 /* ---- Window ---- */
 window {
@@ -15,15 +15,15 @@ mainbox {
     [ "inputbar", "listview"];
 }
 
-/* ---- Entry ---- */ 
+/* ---- Entry ---- */
 entry {
   placeholder: "Choose Media or Stations to play";
 }
 
 /* ---- Listview ---- */
 listview {
-  columns: 2;
-  lines: 7;
+  columns: 1; /* Changed from 2 */
+  lines: 10; /* Changed from 7 */
   fixed-height: false;
   margin: 10px;
   scrollbar: true;

@@ -1,9 +1,9 @@
 /* ---- 💫 https://github.com/JaKooLit 💫 ---- */
 /* Main Config (wallpaper) */
 
-@import "~/.config/rofi/config.rasi"  
+@import "~/.config/rofi/config.rasi"
 
-/* ---- Configuration ---- */ 
+/* ---- Configuration ---- */
 configuration {
   modi: "drun";
 }
@@ -23,18 +23,15 @@ entry {
   expand: true;
   placeholder: " 🎞️ Search / Choose Wallpaper";
   horizontal-align: 0.5;
-  horizontal-align: 0.5;
 }
 
 /* ---- Listview ---- */
 listview {
-  columns: 6;
-  lines: 2;
+  columns: 4; /* Changed from 6 */
+  lines: 3; /* Changed from 2 */
   spacing: 20px;
   padding: 10px;
-  columns: 6;
-  lines: 2;
-  flow: horizontal;
+  flow: vertical; /* Changed from horizontal */
   fixed-width: true;
   fixed-height: true;
   cycle: true;
@@ -46,7 +43,6 @@ element {
   padding: 0px;
   spacing: 0px;
   border-radius: 10px;
-  padding: 0px;
   margin: 0px;
 }
 

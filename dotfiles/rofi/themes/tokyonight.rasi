@@ -1,8 +1,8 @@
 /**
  * ROFI Color theme
  *
- * Enhanced Tokyo Night Theme
- * User: Enhanced by Claude
+ * Enhanced Tokyo Night Theme - TUI Style
+ * User: Enhanced by Claude & Gemini
  * Copyright: Based on Tokyo Night colorscheme
  */
 
@@ -16,7 +16,7 @@ configuration {
     display-filebrowser: " Files";
     drun-display-format: "{name}";
     window-format: "{w} {c} {t}";
-    
+
     drun {
         display-name: " Apps";
     }
@@ -29,12 +29,12 @@ configuration {
     filebrowser {
         display-name: " Files";
     }
-    
+
     timeout {
         delay: 10;
         action: "kb-cancel";
     }
-    
+
     kb-row-up: "Up,Control+k,Shift+Tab,Shift+ISO_Left_Tab";
     kb-row-down: "Down,Control+j";
     kb-accept-entry: "Control+m,Return,KP_Enter";
@@ -50,24 +50,23 @@ configuration {
     margin: 0;
     padding: 0;
     spacing: 0;
-    
     /* Tokyo Night Color Palette */
     bg-primary: #1a1b26;
     bg-secondary: #24283b;
     bg-selected: #414868;
     bg-urgent: #f7768e;
-    
+
     fg-primary: #c0caf5;
     fg-secondary: #a9b1d6;
     fg-muted: #565f89;
-    
+
     accent-blue: #7aa2f7;
     accent-purple: #bb9af7;
     accent-cyan: #7dcfff;
     accent-green: #9ece6a;
     accent-orange: #ff9e64;
     accent-red: #f7768e;
-    
+
     background-color: transparent;
     text-color: @fg-primary;
 }
@@ -77,52 +76,45 @@ window {
     location: center;
     anchor: center;
     fullscreen: false;
-    width: 800px;
+    width: 60%; /* Made window slightly wider */
     x-offset: 0px;
     y-offset: 0px;
-    
     background-color: @bg-primary;
-    border: 2px solid;
+    border: 1px solid;
     border-color: @accent-blue;
-    border-radius: 16px;
-    
-    /* Subtle shadow effect */
+    border-radius: 12px; 
     children: [mainbox];
 }
 
 mainbox {
     enabled: true;
-    spacing: 12px;
+    spacing: 10px;
     margin: 0px;
-    padding: 16px;
-    border: 0px solid;
-    border-radius: 16px;
-    border-color: @accent-blue;
+    padding: 15px;
+    border: 0px;
     background-color: transparent;
     children: ["inputbar", "listview", "message"];
 }
 
 inputbar {
     enabled: true;
-    spacing: 8px;
-    margin: 0px 0px 8px 0px;
-    padding: 4px;
-    border: 1px solid;
+    spacing: 10px;
+    margin: 0px 0px 10px 0px;
+    padding: 8px;
+    border: 0px;
     border-radius: 12px;
-    border-color: @bg-selected;
     background-color: @bg-secondary;
     text-color: @fg-primary;
-    children: ["textbox-prompt-colon", "entry"];
+    children: ["prompt", "entry"];
 }
 
-textbox-prompt-colon {
+prompt {
     enabled: true;
     expand: false;
-    str: "";
-    padding: 12px 16px;
-    border-radius: 8px;
-    background-color: @accent-blue;
-    text-color: @bg-primary;
+    str: " >"; /* Classic search prompt */
+    padding: 8px 12px;
+    background-color: @bg-secondary;
+    text-color: @accent-blue;
     font: "JetBrainsMono Nerd Font Bold 12";
 }
 
@@ -131,16 +123,15 @@ entry {
     background-color: transparent;
     text-color: @fg-primary;
     cursor: text;
-    placeholder: "Search applications...";
+    placeholder: "Type to search...";
     placeholder-color: @fg-muted;
-    padding: 12px 16px;
-    border-radius: 8px;
+    padding: 8px;
 }
 
 listview {
     enabled: true;
     columns: 1;
-    lines: 8;
+    lines: 10; /* Increased lines for more visibility */
     cycle: true;
     dynamic: true;
     scrollbar: false;
@@ -148,13 +139,10 @@ listview {
     reverse: false;
     fixed-height: true;
     fixed-columns: true;
-    
-    spacing: 4px;
+    spacing: 5px;
     margin: 0px;
     padding: 0px;
-    border: 0px solid;
-    border-radius: 8px;
-    border-color: @accent-blue;
+    border: 0px;
     background-color: transparent;
     text-color: @fg-primary;
     cursor: "default";
@@ -165,13 +153,10 @@ element {
     spacing: 12px;
     margin: 0px;
     padding: 8px 12px;
-    border: 0px solid;
-    border-radius: 8px;
-    border-color: @accent-blue;
+    border-radius: 12px;
     background-color: transparent;
     text-color: @fg-secondary;
     cursor: pointer;
-    
     children: ["element-icon", "element-text"];
 }
 
@@ -191,10 +176,8 @@ element normal.active {
 }
 
 element selected.normal {
-    background-color: @bg-selected;
-    text-color: @fg-primary;
-    border: 1px solid;
-    border-color: @accent-blue;
+    background-color: @accent-blue; /* Inverted color for selection */
+    text-color: @bg-primary;
 }
 
 element selected.urgent {
@@ -244,9 +227,7 @@ message {
     enabled: true;
     margin: 8px 0px 0px 0px;
     padding: 12px;
-    border: 0px solid;
-    border-radius: 8px;
-    border-color: @accent-blue;
+    border-radius: 12px;
     background-color: @bg-secondary;
     text-color: @fg-primary;
 }

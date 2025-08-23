@@ -1,7 +1,7 @@
 /* ---- 💫 https://github.com/JaKooLit 💫 ---- */
 /* Main Config (waybar style) */
 
-@import "~/.config/rofi/config.rasi" 
+@import "~/.config/rofi/config.rasi"
 
 /* ---- Mainbox ---- */
 mainbox {
@@ -19,7 +19,7 @@ window {
   height: inherit;
 }
 
-/* ---- Entry ---- */ 
+/* ---- Entry ---- */
 entry {
   expand: true;
   placeholder: "Search / Choose Waybar Style";
@@ -27,8 +27,8 @@ entry {
 
 /* ---- Listview ---- */
 listview {
-  columns: 2;
-  lines: 7;
+  columns: 1; /* Changed from 2 */
+  lines: 10; /* Changed from 7 */
   fixed-height: false;
   margin: 10px;
   scrollbar: true;

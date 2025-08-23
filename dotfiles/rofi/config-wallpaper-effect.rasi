@@ -1,7 +1,7 @@
 /* ---- 💫 https://github.com/JaKooLit 💫 ---- */
 /* Wallpaper Effects */
 
-@import "~/.config/rofi/config.rasi" 
+@import "~/.config/rofi/config.rasi"
 
 
 /* ---- Mainbox ---- */
@@ -10,7 +10,7 @@ mainbox {
     [ "inputbar", "listview"];
 }
 
-/* ---- Entry ---- */ 
+/* ---- Entry ---- */
 entry {
   width: 32%;
   placeholder: "Search / Choose desired wallpaper effect";
@@ -24,8 +24,8 @@ window {
 
 /* ---- Listview ---- */
 listview {
-  columns: 2;
-  lines: 7;
+  columns: 1; /* Changed from 2 */
+  lines: 10; /* Changed from 7 */
   fixed-height: false;
   scrollbar: true;
   spacing: 6px;

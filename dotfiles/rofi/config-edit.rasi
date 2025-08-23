@@ -1,7 +1,7 @@
 /* ---- 💫 https://github.com/JaKooLit 💫 ---- */
 /* KooL Hyprland Edit Rofi Config */
 
-@import "~/.config/rofi/config.rasi"  
+@import "~/.config/rofi/config.rasi"
 
 /* ---- Mainbox ---- */
 mainbox {
@@ -10,7 +10,7 @@ mainbox {
 }
 
 
-/* ---- Configuration ---- */ 
+/* ---- Configuration ---- */
 configuration {
   modi: "drun";
 }
@@ -24,8 +24,8 @@ window {
 
 /* ---- Listview ---- */
 listview {
-  columns: 3;
-  lines: 6;
+  columns: 1; /* Changed from 3 */
+  lines: 10; /* Changed from 6 */
   fixed-height: false;
   scrollbar: true;
   spacing: 6px;
