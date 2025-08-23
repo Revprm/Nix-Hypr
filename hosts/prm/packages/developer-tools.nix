@@ -59,7 +59,9 @@ in {
     # Documents
     libreoffice
     obsidian
-    
+    pandoc
+    typst
+
     # Add Database if Needed (me personally uses docker for databases)
   ];
 }

@@ -1,0 +1,292 @@
+/* Tokyo Night - Enhanced TUI Style */
+@define-color bg_main #1a1b26;
+@define-color bg_highlight #24283b;
+@define-color bg_darker #16161e;
+@define-color fg_main #c0caf5;
+@define-color fg_dark #a9b1d6;
+@define-color fg_darker #565f89;
+@define-color red #f7768e;
+@define-color green #9ece6a;
+@define-color blue #7aa2f7;
+@define-color purple #bb9af7;
+@define-color yellow #e0af68;
+@define-color orange #ff9e64;
+@define-color cyan #7dcfff;
+@define-color border_color #565f89;
+@define-color glow_color rgba(122, 162, 247, 0.3);
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: 'JetBrainsMono Nerd Font', 'JetBrains Mono', 'Font Awesome 6 Free', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    min-height: 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+window#waybar {
+    background: linear-gradient(135deg, @bg_main 0%, @bg_darker 100%);
+    color: @fg_main;
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    margin: 3px 8px;
+}
+
+/* Enhanced module styling */
+#workspaces,
+#window,
+#clock,
+#cpu,
+#memory,
+#temperature,
+#network,
+#pulseaudio,
+#battery,
+#tray,
+#custom-power,
+#custom-separator,
+#custom-box-start,
+#custom-box-end {
+    padding: 4px 6px;
+    margin: 0;
+    color: @fg_main;
+    transition: all 0.2s ease;
+}
+
+/* Module group containers - cleaner styling */
+.modules-left,
+.modules-center,
+.modules-right {
+    background: transparent;
+    border: 1px solid @border_color;
+    border-radius: 10px;
+    margin: 2px 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.modules-left:hover,
+.modules-center:hover,
+.modules-right:hover {
+    border-color: @blue;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Enhanced TUI decorative elements */
+#custom-box-start,
+#custom-box-end {
+    color: @border_color;
+    padding: 0 6px;
+    font-weight: bold;
+    text-shadow: 0 0 5px @glow_color;
+}
+
+/* Animated separator */
+#custom-separator {
+    color: @border_color;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+#custom-separator:hover {
+    opacity: 1;
+    color: @blue;
+}
+
+/* Clean workspace styling */
+#workspaces button {
+    padding: 3px 8px;
+    color: @fg_darker;
+    background: transparent;
+    border-radius: 6px;
+    margin: 0 1px;
+    transition: color 0.3s ease;
+    font-size: 14px;
+}
+
+#workspaces button:hover {
+    color: @blue;
+}
+
+#workspaces button.active {
+    color: @blue;
+    text-shadow: 0 0 8px @blue;
+    font-weight: bold;
+}
+
+/* Clean module-specific styling */
+#window {
+    padding-right: 8px;
+    color: @fg_dark;
+    font-style: italic;
+    opacity: 0.9;
+}
+
+#clock {
+    padding: 4px 12px;
+    font-weight: bold;
+    color: @cyan;
+    text-shadow: 0 0 6px rgba(125, 207, 255, 0.5);
+}
+
+#cpu {
+    color: @green;
+    font-weight: bold;
+}
+
+#memory {
+    color: @purple;
+    font-weight: bold;
+}
+
+#temperature {
+    color: @yellow;
+    font-weight: bold;
+}
+
+#temperature.critical {
+    color: @red;
+    animation: pulse-red 1s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-red {
+    from {
+        text-shadow: 0 0 5px @red;
+    }
+
+    to {
+        text-shadow: 0 0 15px @red, 0 0 25px rgba(247, 118, 142, 0.5);
+    }
+}
+
+/* Enhanced battery styling */
+#battery {
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+#battery.charging {
+    color: @green;
+    animation: charging-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes charging-glow {
+    from {
+        text-shadow: 0 0 5px @green;
+    }
+
+    to {
+        text-shadow: 0 0 15px @green, 0 0 25px rgba(158, 206, 106, 0.5);
+    }
+}
+
+#battery.warning {
+    color: @orange;
+    animation: warning-pulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes warning-pulse {
+    from {
+        text-shadow: 0 0 5px @orange;
+    }
+
+    to {
+        text-shadow: 0 0 12px @orange, 0 0 20px rgba(255, 158, 100, 0.4);
+    }
+}
+
+#battery.critical:not(.charging) {
+    color: @red;
+    animation: critical-blink 0.8s linear infinite alternate;
+}
+
+@keyframes critical-blink {
+    from {
+        opacity: 1;
+        text-shadow: 0 0 8px @red;
+    }
+
+    to {
+        opacity: 0.4;
+        text-shadow: 0 0 20px @red, 0 0 30px rgba(247, 118, 142, 0.6);
+    }
+}
+
+/* Clean audio and network styling */
+#pulseaudio {
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+#pulseaudio.muted {
+    color: @red;
+    text-decoration: line-through;
+    animation: muted-fade 1s ease-in-out infinite alternate;
+}
+
+@keyframes muted-fade {
+    from {
+        opacity: 0.5;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+#network {
+    font-weight: bold;
+    color: @cyan;
+    transition: color 0.3s ease;
+}
+
+#network.disconnected {
+    color: @red;
+    animation: disconnected-pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes disconnected-pulse {
+    from {
+        text-shadow: 0 0 3px @red;
+    }
+
+    to {
+        text-shadow: 0 0 8px @red;
+    }
+}
+
+/* Clean power button and tray */
+#custom-power {
+    color: @red;
+    padding-right: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    border-radius: 6px;
+}
+
+#custom-power:hover {
+    text-shadow: 0 0 10px @red;
+}
+
+#tray {
+    padding: 4px 8px;
+}
+
+#tray>.passive {
+    transition: all 0.3s ease;
+}
+
+#tray>.active {
+    background: transparent;
+    border-radius: 4px;
+}
+
+/* Remove hover effects for modules */
+#cpu:hover,
+#memory:hover,
+#temperature:hover,
+#battery:hover {
+    transition: all 0.2s ease;
+}
