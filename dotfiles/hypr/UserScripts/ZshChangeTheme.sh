@@ -10,8 +10,8 @@ iDIR="$HOME/.config/swaync/images"
 rofi_theme="$HOME/.config/rofi/config-zsh-theme.rasi"
 
 if [ -n "$(grep -i nixos < /etc/os-release)" ]; then
-  notify-send -i "$iDIR/note.png" "NOT Supported" "Sorry NixOS does not support this KooL feature"
-  exit 1
+    notify-send -i "$iDIR/note.png" "NOT Supported" "Sorry NixOS does not support this KooL feature"
+    exit 1
 fi
 
 themes_dir="$HOME/.oh-my-zsh/themes"
@@ -33,29 +33,29 @@ menu() {
 
 main() {
     choice=$(menu | ${rofi_command})
-
+    
     # if nothing selected, script won't change anything
     if [ -z "$choice" ]; then
         exit 0
     fi
-
+    
     zsh_path="$HOME/.zshrc"
     var_name="ZSH_THEME"
-
+    
     if [[ "$choice" == "Random" ]]; then
         # Pick a random theme from the original themes_array (excluding "Random")
         random_theme=${themes_array[$((RANDOM % (${#themes_array[@]} - 1) + 1))]}
         theme_to_set="$random_theme"
-        notify-send -i "$iDIR/ja.png" "Random theme:" "selected: $random_theme"
+        notify-send -i "$iDIR/shimarin.jpg" "Random theme:" "selected: $random_theme"
     else
         # Set theme to the selected choice
         theme_to_set="$choice"
-        notify-send -i "$iDIR/ja.png" "Theme selected:" "$choice"
+        notify-send -i "$iDIR/shimarin.jpg" "Theme selected:" "$choice"
     fi
-
+    
     if [ -f "$zsh_path" ]; then
         sed -i "s/^$var_name=.*/$var_name=\"$theme_to_set\"/" "$zsh_path"
-        notify-send -i "$iDIR/ja.png" "OMZ theme" "applied. restart your terminal"
+        notify-send -i "$iDIR/shimarin.jpg" "OMZ theme" "applied. restart your terminal"
     else
         notify-send -i "$iDIR/error.png" "E-R-R-O-R" "~.zshrc file not found!"
     fi
@@ -63,7 +63,7 @@ main() {
 
 # Check if rofi is already running
 if pidof rofi > /dev/null; then
-  pkill rofi
+    pkill rofi
 fi
 
 main

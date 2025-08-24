@@ -1,141 +1,77 @@
 #!/bin/bash
 # /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
-# A modified version of Rofi-Theme-Selector, concentrating only on ~/.local and also, applying only 10 @themes in ~/.config/rofi/config.rasi
-# as opposed to continous adding of //@theme
+# simple bash script to check if update is available by comparing local version and github version
 
-# This code is released in public domain by Dave Davenport <qball@gmpclient.org>
+# Local Paths
+local_dir="$HOME/.config/hypr"
+iDIR="$HOME/.config/swaync/images/"
+local_version=$(ls $local_dir/v* 2>/dev/null | sort -V | tail -n 1 | sed 's/.*v\(.*\)/\1/')
+KooL_Dots_DIR="$HOME/Hyprland-Dots"
 
-iDIR="$HOME/.config/swaync/images"
-
-
-OS="linux"
-
-ROFI=$(command -v rofi)
-SED=$(command -v sed)
-MKTEMP=$(command -v mktemp)
-NOTIFY_SEND=$(command -v notify-send)
-
-if [ -z "${SED}" ]
-then
-    echo "Did not find 'sed', script cannot continue."
+# exit if cannot find local version
+if [ -z "$local_version" ]; then
+    notify-send -i "$iDIR/error.png" "ERROR "!?!?!!"" "Unable to find KooL's dots version . exiting.... "
     exit 1
 fi
-if [ -z "${MKTEMP}" ]
-then
-    echo "Did not find 'mktemp', script cannot continue."
+
+# GitHub URL - KooL's dots
+branch="main"
+github_url="https://github.com/JaKooLit/Hyprland-Dots/tree/$branch/config/hypr/"
+
+# Fetch the version from GitHub URL - KooL's dots
+github_version=$(curl -s $github_url | grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+' | sort -V | tail -n 1 | sed 's/v//')
+
+# Cant find  GitHub URL - KooL's dots version
+if [ -z "$github_version" ]; then
     exit 1
 fi
-if [ -z "${ROFI}" ]
-then
-    echo "Did not find rofi, there is no point to continue."
-    exit 1
-fi
-if [ -z "${NOTIFY_SEND}" ]
-then
-    echo "Did not find 'notify-send', notifications won't work."
-fi
 
-TMP_CONFIG_FILE=$(${MKTEMP}).rasi
-#rofi_theme_dir="${HOME}/.local/share/rofi/themes"
-rofi_config_file="${XDG_CONFIG_HOME:-${HOME}/.config}/rofi/config.rasi"
-
-##
-# Array with parts to the found themes.
-# And array with the printable name.
-##
-declare -a themes
-declare -a theme_names
-
-##
-# Function that tries to find all installed rofi themes.
-# This fills in #themes array and formats a displayable string #theme_names
-##
-# Find themes in defined directories
-find_themes() {
-    directories=("$HOME/.local/share/rofi/themes" "$HOME/.config/rofi/themes")
+# Comparing local and github versions
+if [ "$(echo -e "$github_version\n$local_version" | sort -V | head -n 1)" = "$github_version" ]; then
+    notify-send -i "$iDIR/note.png" "KooL Hyprland:" "No update available"
+    exit 0
+else
+    # update available
+    notify_cmd_base="notify-send -t 10000 -A action1=Update -A action2=NO -h string:x-canonical-private-synchronous:shot-notify"
+    notify_cmd_shot="${notify_cmd_base} -i $iDIR/shimarin.jpg"
     
-    for TD in "${directories[@]}"; do
-        if [ -d "$TD" ]; then
-            echo "Checking themes in: $TD"
-            for file in "$TD"/*.rasi; do
-                if [ -f "$file" ] && [ ! -L "$file" ]; then
-                    themes+=("$file")
-                    theme_names+=("$(basename "${file%.*}")")
-                else
-                    echo "Skipping symlink: $file"
+    response=$($notify_cmd_shot "KooL Hyprland:" "Update available! Update now?")
+    
+    case "$response" in
+        "action1")
+            if [ -d $KooL_Dots_DIR ]; then
+                if ! command -v kitty &> /dev/null; then
+                    notify-send -i "$iDIR/error.png" "E-R-R-O-R" "Kitty terminal not found. Please install Kitty terminal."
+                    exit 1
                 fi
-            done
-        else
-            echo "Directory does not exist: $TD"
-        fi
-    done
-}
-
-##
-# Function to add or update theme in the config.rasi
-##
-add_theme_to_config() {
-    local theme_name="$1"
-    local theme_path
-
-    # Determine the correct path for the theme
-    if [[ -f "$HOME/.local/share/rofi/themes/$theme_name.rasi" ]]; then
-        theme_path="$HOME/.local/share/rofi/themes/$theme_name.rasi"
-    elif [[ -f "$HOME/.config/rofi/themes/$theme_name.rasi" ]]; then
-        theme_path="$HOME/.config/rofi/themes/$theme_name.rasi"
-    else
-        echo "Theme not found: $theme_name"
-        return 1
-    fi
-
-    # Resolve symlinks if present
-    if [[ -L "$theme_path" ]]; then
-        theme_path=$(readlink -f "$theme_path")
-    fi
-
-    # Convert path to use ~ for home directory
-    theme_path_with_tilde="~${theme_path#$HOME}"
-
-    # Add or update @theme line in config
-    if ! grep -q '^\s*@theme' "$rofi_config_file"; then
-        echo -e "\n\n@theme \"$theme_path_with_tilde\"" >> "$rofi_config_file"
-        echo "Added @theme \"$theme_path_with_tilde\" to $rofi_config_file"
-    else
-        $SED -i "s/^\(\s*@theme.*\)/\/\/\1/" "$rofi_config_file"
-        echo -e "@theme \"$theme_path_with_tilde\"" >> "$rofi_config_file"
-        echo "Updated @theme line to $theme_path_with_tilde"
-    fi
-
-    # Limit the number of @theme lines to a maximum of 9
-    max_lines=9
-    total_lines=$(grep -c '^\s*//@theme' "$rofi_config_file")
-
-    if [ "$total_lines" -gt "$max_lines" ]; then
-        excess=$((total_lines - max_lines))
-        for i in $(seq 1 "$excess"); do
-            $SED -i '0,/^\s*\/\/@theme/ { /^\s*\/\/@theme/ {d; q; }}' "$rofi_config_file"
-        done
-        echo "Removed excess //@theme lines"
-    fi
-}
-
-##
-# Create a copy of rofi config
-##
-create_config_copy()
-{
-    ${ROFI} -dump-config > "${TMP_CONFIG_FILE}"
-    # remove theme entry.
-    ${SED} -i 's/^\s*theme:\s\+".*"\s*;//g' "${TMP_CONFIG_FILE}"
-}
-
-###
-# Print the list out so it can be displayed by rofi.
-##
-create_theme_list()
-{
-    OLDIFS=${IFS}
-    IFS='|'
+                kitty -e bash -c "
+          cd $KooL_Dots_DIR &&
+          git stash &&
+          git pull &&
+          ./copy.sh &&
+		  notify-send -u critical -i "$iDIR/shimarin.jpg" 'Update Completed:' 'Kindly log out and relogin to take effect'
+                "
+                
+            else
+                if ! command -v kitty &> /dev/null; then
+                    notify-send -i "$iDIR/error.png" "E-R-R-O-R" "Kitty terminal not found. Please install Kitty terminal."
+                    exit 1
+                fi
+                kitty -e bash -c "
+          git clone --depth=1 https://github.com/JaKooLit/Hyprland-Dots.git $KooL_Dots_DIR &&
+          cd $KooL_Dots_DIR &&
+          chmod +x copy.sh &&
+          ./copy.sh &&
+		  notify-send -u critical -i "$iDIR/shimarin.jpg" 'Update Completed:' 'Kindly log out and relogin to take effect'
+                "
+            fi
+        ;;
+        "action2")
+            exit 0
+        ;;
+    esac
+fi
+  IFS='|'
     for themen in ${theme_names[@]}
     do
         echo "${themen}"
@@ -219,7 +155,7 @@ then
     # Send notification with the selected theme name
     selection="${theme_names[${SELECTED}]}"
     if [ -n "$NOTIFY_SEND" ]; then
-        notify-send -u low -i "$iDIR/ja.png"  "Rofi Theme applied:" "$selection"
+        notify-send -u low -i "$iDIR/shimarin.jpg"  "Rofi Theme applied:" "$selection"
     fi
 fi
 

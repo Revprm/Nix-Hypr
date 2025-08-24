@@ -1,40 +1,69 @@
 #!/bin/bash
 # /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
-# Simple bash script to check and will try to update your system
+# Script for Oh my ZSH theme ( CTRL SHIFT O)
 
-# Local Paths
+# preview of theme can be view here: https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# after choosing theme, TTY need to be closed and re-open
+
+# Variables
 iDIR="$HOME/.config/swaync/images"
+rofi_theme="$HOME/.config/rofi/config-zsh-theme.rasi"
 
-# Check for required tools (kitty)
-if ! command -v kitty &> /dev/null; then
-  notify-send -i "$iDIR/error.png" "Need Kitty:" "Kitty terminal not found. Please install Kitty terminal."
-  exit 1
+if [ -n "$(grep -i nixos < /etc/os-release)" ]; then
+    notify-send -i "$iDIR/note.png" "NOT Supported" "Sorry NixOS does not support this KooL feature"
+    exit 1
 fi
 
-# Detect distribution and update accordingly
-if command -v paru &> /dev/null || command -v yay &> /dev/null; then
-  # Arch-based
-  if command -v paru &> /dev/null; then
-    kitty -T update paru -Syu
-    notify-send -i "$iDIR/ja.png" -u low 'Arch-based system' 'has been updated.'
-  else
-    kitty -T update yay -Syu
-    notify-send -i "$iDIR/ja.png" -u low 'Arch-based system' 'has been updated.'
-  fi
-elif command -v dnf &> /dev/null; then
-  # Fedora-based
-  kitty -T update sudo dnf update --refresh -y
-  notify-send -i "$iDIR/ja.png" -u low 'Fedora system' 'has been updated.'
-elif command -v apt &> /dev/null; then
-  # Debian-based (Debian, Ubuntu, etc.)
-  kitty -T update sudo apt update && sudo apt upgrade -y
-  notify-send -i "$iDIR/ja.png" -u low 'Debian/Ubuntu system' 'has been updated.'
-elif command -v zypper &> /dev/null; then
-  # openSUSE-based
-  kitty -T update sudo zypper dup -y
-  notify-send -i "$iDIR/ja.png" -u low 'openSUSE system' 'has been updated.'
-else
-  # Unsupported distro
-  notify-send -i "$iDIR/error.png" -u critical "Unsupported system" "This script does not support your distribution."
-  exit 1
+themes_dir="$HOME/.oh-my-zsh/themes"
+file_extension=".zsh-theme"
+
+
+themes_array=($(find -L "$themes_dir" -type f -name "*$file_extension" -exec basename {} \; | sed -e "s/$file_extension//"))
+
+# Add "Random" option to the beginning of the array
+themes_array=("Random" "${themes_array[@]}")
+
+rofi_command="rofi -i -dmenu -config $rofi_theme"
+
+menu() {
+    for theme in "${themes_array[@]}"; do
+        echo "$theme"
+    done
+}
+
+main() {
+    choice=$(menu | ${rofi_command})
+    
+    # if nothing selected, script won't change anything
+    if [ -z "$choice" ]; then
+        exit 0
+    fi
+    
+    zsh_path="$HOME/.zshrc"
+    var_name="ZSH_THEME"
+    
+    if [[ "$choice" == "Random" ]]; then
+        # Pick a random theme from the original themes_array (excluding "Random")
+        random_theme=${themes_array[$((RANDOM % (${#themes_array[@]} - 1) + 1))]}
+        theme_to_set="$random_theme"
+        notify-send -i "$iDIR/shimarin.jpg" "Random theme:" "selected: $random_theme"
+    else
+        # Set theme to the selected choice
+        theme_to_set="$choice"
+        notify-send -i "$iDIR/shimarin.jpg" "Theme selected:" "$choice"
+    fi
+    
+    if [ -f "$zsh_path" ]; then
+        sed -i "s/^$var_name=.*/$var_name=\"$theme_to_set\"/" "$zsh_path"
+        notify-send -i "$iDIR/shimarin.jpg" "OMZ theme" "applied. restart your terminal"
+    else
+        notify-send -i "$iDIR/error.png" "E-R-R-O-R" "~.zshrc file not found!"
+    fi
+}
+
+# Check if rofi is already running
+if pidof rofi > /dev/null; then
+    pkill rofi
 fi
+
+main

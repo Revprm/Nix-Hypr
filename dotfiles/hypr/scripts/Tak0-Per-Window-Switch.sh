@@ -1,123 +1,69 @@
-##################################################################
-#                                                                #   
-#                                                                #
-#                  TAK_0'S Per-Window-Switch                     #
-#                                                                #
-#                                                                #
-#                                                                #
-#  Just a little script that I made to switch keyboard layouts   #
-#       per-window instead of global switching for the more      #
-#                 smooth and comfortable workflow.               #  
-#                                                                #
-##################################################################
+#!/bin/bash
+# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
+# Script for Oh my ZSH theme ( CTRL SHIFT O)
 
+# preview of theme can be view here: https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# after choosing theme, TTY need to be closed and re-open
 
+# Variables
+iDIR="$HOME/.config/swaync/images"
+rofi_theme="$HOME/.config/rofi/config-zsh-theme.rasi"
 
-
-
-
-
-
-# This is for changing kb_layouts. Set kb_layouts in 
-
-MAP_FILE="$HOME/.cache/kb_layout_per_window"
-CFG_FILE="$HOME/.config/hypr/UserConfigs/UserSettings.conf"
-ICON="$HOME/.config/swaync/images/ja.png"
-SCRIPT_NAME="$(basename "$0")"
-
-# Ensure map file exists
-touch "$MAP_FILE"
-
-# Read layouts from config
-if ! grep -q 'kb_layout' "$CFG_FILE"; then
-  echo "Error: cannot find kb_layout in $CFG_FILE" >&2
-  exit 1
-fi
-kb_layouts=($(grep 'kb_layout' "$CFG_FILE" | cut -d '=' -f2 | tr -d '[:space:]' | tr ',' ' '))
-count=${#kb_layouts[@]}
-
-# Get current active window ID
-get_win() {
-  hyprctl activewindow -j | jq -r '.address // .id'
-}
-
-# Get available keyboards
-get_keyboards() {
-  hyprctl devices -j | jq -r '.keyboards[].name'
-}
-
-# Save window-specific layout
-save_map() {
-  local W=$1 L=$2
-  grep -v "^${W}:" "$MAP_FILE" > "$MAP_FILE.tmp"
-  echo "${W}:${L}" >> "$MAP_FILE.tmp"
-  mv "$MAP_FILE.tmp" "$MAP_FILE"
-}
-
-# Load layout for window (fallback to default)
-load_map() {
-  local W=$1
-  local E
-  E=$(grep "^${W}:" "$MAP_FILE")
-  [[ -n "$E" ]] && echo "${E#*:}" || echo "${kb_layouts[0]}"
-}
-
-# Switch layout for all keyboards to layout index
-do_switch() {
-  local IDX=$1
-  for kb in $(get_keyboards); do
-    hyprctl switchxkblayout "$kb" "$IDX" 2>/dev/null
-  done
-}
-
-# Toggle layout for current window only
-cmd_toggle() {
-  local W=$(get_win)
-  [[ -z "$W" ]] && return
-  local CUR=$(load_map "$W")
-  local i NEXT
-  for idx in "${!kb_layouts[@]}"; do
-    if [[ "${kb_layouts[idx]}" == "$CUR" ]]; then
-      i=$idx
-      break
-    fi
-  done
-  NEXT=$(( (i+1) % count ))
-  do_switch "$NEXT"
-  save_map "$W" "${kb_layouts[NEXT]}"
-  notify-send -u low -i "$ICON" "kb_layout: ${kb_layouts[NEXT]}"
-}
-
-# Restore layout on focus
-cmd_restore() {
-  local W=$(get_win)
-  [[ -z "$W" ]] && return
-  local LAY=$(load_map "$W")
-  for idx in "${!kb_layouts[@]}"; do
-    if [[ "${kb_layouts[idx]}" == "$LAY" ]]; then
-      do_switch "$idx"
-      break
-    fi
-  done
-}
-
-# Listen to focus events and restore window-specific layouts
-subscribe() {
-  local SOCKET2="$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock"
-  [[ -S "$SOCKET2" ]] || { echo "Error: Hyprland socket not found." >&2; exit 1; }
-
-  socat -u UNIX-CONNECT:"$SOCKET2" - | while read -r line; do
-    [[ "$line" =~ ^activewindow ]] && cmd_restore
-  done
-}
-
-# Ensure only one listener
-if ! pgrep -f "$SCRIPT_NAME.*--listener" >/dev/null; then
-  subscribe --listener &
+if [ -n "$(grep -i nixos < /etc/os-release)" ]; then
+    notify-send -i "$iDIR/note.png" "NOT Supported" "Sorry NixOS does not support this KooL feature"
+    exit 1
 fi
 
-# CLI
-case "$1" in
-  toggle|"") cmd_toggle ;;
-  *) echo "Usage: $SCRIPT_NAME [toggle]" >&2; exit 1 ;;
-esac
+themes_dir="$HOME/.oh-my-zsh/themes"
+file_extension=".zsh-theme"
+
+
+themes_array=($(find -L "$themes_dir" -type f -name "*$file_extension" -exec basename {} \; | sed -e "s/$file_extension//"))
+
+# Add "Random" option to the beginning of the array
+themes_array=("Random" "${themes_array[@]}")
+
+rofi_command="rofi -i -dmenu -config $rofi_theme"
+
+menu() {
+    for theme in "${themes_array[@]}"; do
+        echo "$theme"
+    done
+}
+
+main() {
+    choice=$(menu | ${rofi_command})
+    
+    # if nothing selected, script won't change anything
+    if [ -z "$choice" ]; then
+        exit 0
+    fi
+    
+    zsh_path="$HOME/.zshrc"
+    var_name="ZSH_THEME"
+    
+    if [[ "$choice" == "Random" ]]; then
+        # Pick a random theme from the original themes_array (excluding "Random")
+        random_theme=${themes_array[$((RANDOM % (${#themes_array[@]} - 1) + 1))]}
+        theme_to_set="$random_theme"
+        notify-send -i "$iDIR/shimarin.jpg" "Random theme:" "selected: $random_theme"
+    else
+        # Set theme to the selected choice
+        theme_to_set="$choice"
+        notify-send -i "$iDIR/shimarin.jpg" "Theme selected:" "$choice"
+    fi
+    
+    if [ -f "$zsh_path" ]; then
+        sed -i "s/^$var_name=.*/$var_name=\"$theme_to_set\"/" "$zsh_path"
+        notify-send -i "$iDIR/shimarin.jpg" "OMZ theme" "applied. restart your terminal"
+    else
+        notify-send -i "$iDIR/error.png" "E-R-R-O-R" "~.zshrc file not found!"
+    fi
+}
+
+# Check if rofi is already running
+if pidof rofi > /dev/null; then
+    pkill rofi
+fi
+
+main

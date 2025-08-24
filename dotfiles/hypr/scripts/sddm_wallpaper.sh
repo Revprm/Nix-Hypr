@@ -1,76 +1,69 @@
 #!/bin/bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */
-# SDDM Wallpaper and Wallust Colors Setter
+# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
+# Script for Oh my ZSH theme ( CTRL SHIFT O)
 
-# for the upcoming changes on the simple_sddm_theme
+# preview of theme can be view here: https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# after choosing theme, TTY need to be closed and re-open
 
-# variables
-terminal=kitty
-wallDIR="$HOME/Pictures/wallpapers"
-SCRIPTSDIR="$HOME/.config/hypr/scripts"
-wallpaper_current="$HOME/.config/hypr/wallpaper_effects/.wallpaper_current"
-wallpaper_modified="$HOME/.config/hypr/wallpaper_effects/.wallpaper_modified"
-sddm_simple="/usr/share/sddm/themes/simple_sddm_2"
-
-# rofi-wallust-sddm colors path
-rofi_wallust="$HOME/.config/rofi/wallust/colors-rofi.rasi"
-sddm_theme_conf="$sddm_simple/theme.conf"
-
-# Directory for swaync
+# Variables
 iDIR="$HOME/.config/swaync/images"
-iDIRi="$HOME/.config/swaync/icons"
+rofi_theme="$HOME/.config/rofi/config-zsh-theme.rasi"
 
-# Parse arguments
-mode="effects" # default
-if [[ "$1" == "--normal" ]]; then
-    mode="normal"
-elif [[ "$1" == "--effects" ]]; then
-    mode="effects"
+if [ -n "$(grep -i nixos < /etc/os-release)" ]; then
+    notify-send -i "$iDIR/note.png" "NOT Supported" "Sorry NixOS does not support this KooL feature"
+    exit 1
 fi
 
-# Extract colors from rofi wallust config
+themes_dir="$HOME/.oh-my-zsh/themes"
+file_extension=".zsh-theme"
 
-color0=$(grep -oP 'color1:\s*\K#[A-Fa-f0-9]+' "$rofi_wallust")
-color1=$(grep -oP 'color0:\s*\K#[A-Fa-f0-9]+' "$rofi_wallust")
-color7=$(grep -oP 'color14:\s*\K#[A-Fa-f0-9]+' "$rofi_wallust")
-color10=$(grep -oP 'color10:\s*\K#[A-Fa-f0-9]+' "$rofi_wallust")
-color12=$(grep -oP 'color12:\s*\K#[A-Fa-f0-9]+' "$rofi_wallust")
-color13=$(grep -oP 'color13:\s*\K#[A-Fa-f0-9]+' "$rofi_wallust")
-foreground=$(grep -oP 'foreground:\s*\K#[A-Fa-f0-9]+' "$rofi_wallust")
-#background-color=$(grep -oP 'background:\s*\K#[A-Fa-f0-9]+' "$rofi_wallust")
 
-# wallpaper to use
-if [[ "$mode" == "normal" ]]; then
-    wallpaper_path="$wallpaper_current"
-else
-    wallpaper_path="$wallpaper_modified"
+themes_array=($(find -L "$themes_dir" -type f -name "*$file_extension" -exec basename {} \; | sed -e "s/$file_extension//"))
+
+# Add "Random" option to the beginning of the array
+themes_array=("Random" "${themes_array[@]}")
+
+rofi_command="rofi -i -dmenu -config $rofi_theme"
+
+menu() {
+    for theme in "${themes_array[@]}"; do
+        echo "$theme"
+    done
+}
+
+main() {
+    choice=$(menu | ${rofi_command})
+    
+    # if nothing selected, script won't change anything
+    if [ -z "$choice" ]; then
+        exit 0
+    fi
+    
+    zsh_path="$HOME/.zshrc"
+    var_name="ZSH_THEME"
+    
+    if [[ "$choice" == "Random" ]]; then
+        # Pick a random theme from the original themes_array (excluding "Random")
+        random_theme=${themes_array[$((RANDOM % (${#themes_array[@]} - 1) + 1))]}
+        theme_to_set="$random_theme"
+        notify-send -i "$iDIR/shimarin.jpg" "Random theme:" "selected: $random_theme"
+    else
+        # Set theme to the selected choice
+        theme_to_set="$choice"
+        notify-send -i "$iDIR/shimarin.jpg" "Theme selected:" "$choice"
+    fi
+    
+    if [ -f "$zsh_path" ]; then
+        sed -i "s/^$var_name=.*/$var_name=\"$theme_to_set\"/" "$zsh_path"
+        notify-send -i "$iDIR/shimarin.jpg" "OMZ theme" "applied. restart your terminal"
+    else
+        notify-send -i "$iDIR/error.png" "E-R-R-O-R" "~.zshrc file not found!"
+    fi
+}
+
+# Check if rofi is already running
+if pidof rofi > /dev/null; then
+    pkill rofi
 fi
 
-# Launch terminal and apply changes
-$terminal -e bash -c "
-echo 'Enter your password to update SDDM wallpapers and colors';
-
-# Update the colors in the SDDM config
-sudo sed -i \"s/HeaderTextColor=\\\"#.*\\\"/HeaderTextColor=\\\"$color13\\\"/\" \"$sddm_theme_conf\"
-sudo sed -i \"s/DateTextColor=\\\"#.*\\\"/DateTextColor=\\\"$color13\\\"/\" \"$sddm_theme_conf\"
-sudo sed -i \"s/TimeTextColor=\\\"#.*\\\"/TimeTextColor=\\\"$color13\\\"/\" \"$sddm_theme_conf\"
-sudo sed -i \"s/DropdownSelectedBackgroundColor=\\\"#.*\\\"/DropdownSelectedBackgroundColor=\\\"$color13\\\"/\" \"$sddm_theme_conf\"
-sudo sed -i \"s/SystemButtonsIconsColor=\\\"#.*\\\"/SystemButtonsIconsColor=\\\"$color13\\\"/\" \"$sddm_theme_conf\"
-sudo sed -i \"s/SessionButtonTextColor=\\\"#.*\\\"/SessionButtonTextColor=\\\"$color13\\\"/\" \"$sddm_theme_conf\"
-sudo sed -i \"s/VirtualKeyboardButtonTextColor=\\\"#.*\\\"/VirtualKeyboardButtonTextColor=\\\"$color13\\\"/\" \"$sddm_theme_conf\"
-sudo sed -i \"s/HighlightBackgroundColor=\\\"#.*\\\"/HighlightBackgroundColor=\\\"$color12\\\"/\" \"$sddm_theme_conf\"
-sudo sed -i \"s/LoginFieldTextColor=\\\"#.*\\\"/LoginFieldTextColor=\\\"$color12\\\"/\" \"$sddm_theme_conf\"
-sudo sed -i \"s/PasswordFieldTextColor=\\\"#.*\\\"/PasswordFieldTextColor=\\\"$color12\\\"/\" \"$sddm_theme_conf\"
-
-sudo sed -i \"s/DropdownBackgroundColor=\\\"#.*\\\"/DropdownBackgroundColor=\\\"$color1\\\"/\" \"$sddm_theme_conf\"
-sudo sed -i \"s/HighlightTextColor=\\\"#.*\\\"/HighlightTextColor=\\\"$color10\\\"/\" \"$sddm_theme_conf\"
-
-sudo sed -i \"s/PlaceholderTextColor=\\\"#.*\\\"/PlaceholderTextColor=\\\"$color7\\\"/\" \"$sddm_theme_conf\"
-sudo sed -i \"s/UserIconColor=\\\"#.*\\\"/UserIconColor=\\\"$color7\\\"/\" \"$sddm_theme_conf\"
-sudo sed -i \"s/PasswordIconColor=\\\"#.*\\\"/PasswordIconColor=\\\"$color7\\\"/\" \"$sddm_theme_conf\"
-
-# Copy wallpaper to SDDM theme
-sudo cp \"$wallpaper_path\" \"$sddm_simple/Backgrounds/default\"
-
-notify-send -i \"$iDIR/ja.png\" \"SDDM\" \"Background SET\"
-"
+main

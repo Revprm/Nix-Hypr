@@ -50,10 +50,10 @@ no-effects() {
     wallust run "$wallpaper_current" -s &&
     wait $!
     # Refresh rofi, waybar, wallust palettes
-	sleep 2
-	"$SCRIPTSDIR/Refresh.sh"
-
-    notify-send -u low -i "$iDIR/ja.png" "No wallpaper" "effects applied"
+    sleep 2
+    "$SCRIPTSDIR/Refresh.sh"
+    
+    notify-send -u low -i "$iDIR/shimarin.jpg" "No wallpaper" "effects applied"
     # copying wallpaper for rofi menu
     cp "$wallpaper_current" "$wallpaper_output"
 }
@@ -65,33 +65,33 @@ main() {
     for effect in "${!effects[@]}"; do
         [[ "$effect" != "No Effects" ]] && options+=("$effect")
     done
-
+    
     choice=$(printf "%s\n" "${options[@]}" | LC_COLLATE=C sort | rofi -dmenu -i -config $rofi_theme)
-
+    
     # Process user choice
     if [[ -n "$choice" ]]; then
         if [[ "$choice" == "No Effects" ]]; then
             no-effects
-        elif [[ "${effects[$choice]+exists}" ]]; then
+            elif [[ "${effects[$choice]+exists}" ]]; then
             # Apply selected effect
-            notify-send -u normal -i "$iDIR/ja.png"  "Applying:" "$choice effects"
+            notify-send -u normal -i "$iDIR/shimarin.jpg"  "Applying:" "$choice effects"
             eval "${effects[$choice]}"
             
             # intial kill process
             for pid in swaybg mpvpaper; do
-            killall -SIGUSR1 "$pid"
+                killall -SIGUSR1 "$pid"
             done
-
+            
             sleep 1
             swww img -o "$focused_monitor" "$wallpaper_output" $SWWW_PARAMS &
-
+            
             sleep 2
-  
+            
             wallust run "$wallpaper_output" -s &
             sleep 1
             # Refresh rofi, waybar, wallust palettes
             "${SCRIPTSDIR}/Refresh.sh"
-            notify-send -u low -i "$iDIR/ja.png" "$choice" "effects applied"
+            notify-send -u low -i "$iDIR/shimarin.jpg" "$choice" "effects applied"
         else
             echo "Effect '$choice' not recognized."
         fi
@@ -108,31 +108,31 @@ main
 sleep 1
 
 if [[ -n "$choice" ]]; then
-  sddm_simple="/usr/share/sddm/themes/simple_sddm_2"
-  if [ -d "$sddm_simple" ]; then
-  
-	# Check if yad is running to avoid multiple yad notification
-	if pidof yad > /dev/null; then
-	  killall yad
-	fi
-	
-	if yad --info --text="Set current wallpaper as SDDM background?\n\nNOTE: This only applies to SIMPLE SDDM v2 Theme" \
-    --text-align=left \
-    --title="SDDM Background" \
-    --timeout=5 \
-    --timeout-indicator=right \
-    --button="yad-yes:0" \
-    --button="yad-no:1" \
-    ; then
-
-    # Check if terminal exists
-    if ! command -v "$terminal" &>/dev/null; then
-    notify-send -i "$iDIR/ja.png" "Missing $terminal" "Install $terminal to enable setting of wallpaper background"
-    exit 1
+    sddm_simple="/usr/share/sddm/themes/simple_sddm_2"
+    if [ -d "$sddm_simple" ]; then
+        
+        # Check if yad is running to avoid multiple yad notification
+        if pidof yad > /dev/null; then
+            killall yad
+        fi
+        
+        if yad --info --text="Set current wallpaper as SDDM background?\n\nNOTE: This only applies to SIMPLE SDDM v2 Theme" \
+        --text-align=left \
+        --title="SDDM Background" \
+        --timeout=5 \
+        --timeout-indicator=right \
+        --button="yad-yes:0" \
+        --button="yad-no:1" \
+        ; then
+            
+            # Check if terminal exists
+            if ! command -v "$terminal" &>/dev/null; then
+                notify-send -i "$iDIR/shimarin.jpg" "Missing $terminal" "Install $terminal to enable setting of wallpaper background"
+                exit 1
+            fi
+            
+            exec $SCRIPTSDIR/sddm_wallpaper.sh --effects
+            
+        fi
     fi
-
-	exec $SCRIPTSDIR/sddm_wallpaper.sh --effects
-    
-    fi
-  fi
 fi
