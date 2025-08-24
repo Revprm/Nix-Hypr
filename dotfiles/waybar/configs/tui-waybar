@@ -24,6 +24,8 @@
   "modules-center": [
     "custom/box-start",
     "clock#5",
+    "custom/separator",
+    "custom/swaync",
     "custom/box-end"
   ],
   "modules-right": [
@@ -70,7 +72,8 @@
   "network": {
     "format-wifi": "󰤨 {signalStrength}%",
     "format-ethernet": "󰈀",
-    "format-disconnected": "󰤭"
+    "format-disconnected": "󰤭",
+    "on-click-right": "nm-connection-editor"
   },
   "pulseaudio": {
     "format": "{icon} {volume}%",
