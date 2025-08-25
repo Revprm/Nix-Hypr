@@ -31,6 +31,7 @@ in {
     openssl
     pkg-config
     cdrtools
+    torrential
 
     # NodeJS Ecosystem
     nodejs
