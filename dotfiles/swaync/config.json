@@ -47,12 +47,12 @@
       "text": "┌─ Do Not Disturb ─┐"
     },
     "label": {
-      "max-lines": 1,
+      "max-lines": 2,
       "text": "├─ System ─┤"
     },
     "mpris": {
-      "image-size": 8,
-      "image-radius": 6,
+      "image-size": 50,
+      "image-radius": 12,
       "blur": false
     },
     "volume": {
@@ -81,7 +81,7 @@
         },
         {
           "label": "[ 󰝟 Mute ]",
-          "command": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+          "command": "$HOME/.config/hypr/scripts/Volume.sh --toggle"
         },
         {
           "label": "[ 󰂯 Bluetooth ]",
