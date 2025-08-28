@@ -14,6 +14,7 @@ let
       pillow
       pyinstaller
       scapy
+      boto3
     ]);
 in {
   developer-packages = with pkgs; [
@@ -63,6 +64,13 @@ in {
     pandoc
     typst
     wpsoffice
+
+    # AWS things
+    awscli2 
+    ssm-session-manager-plugin
+    
+    # IaC Tools
+    terraform
     # Add Database if Needed (me personally uses docker for databases)
   ];
 }

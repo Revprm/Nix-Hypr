@@ -1,63 +1,93 @@
-#!/bin/bash
+#!/bin/bash  
 # /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
-# Script for Oh my ZSH theme ( CTRL SHIFT O)
+# Script for setting SDDM wallpaper
 
-# preview of theme can be view here: https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# after choosing theme, TTY need to be closed and re-open
-
-# Variables
 iDIR="$HOME/.config/swaync/images"
-rofi_theme="$HOME/.config/rofi/config-zsh-theme.rasi"
+wallpapers_dir="$HOME/Pictures/Wallpapers"
+sddm_theme_dir="/usr/share/sddm/themes"
+rofi_theme="$HOME/.config/rofi/config-wallpaper.rasi"
 
-if [ -n "$(grep -i nixos < /etc/os-release)" ]; then
-    notify-send -i "$iDIR/note.png" "NOT Supported" "Sorry NixOS does not support this KooL feature"
+# Create wallpapers directory if it doesn't exist
+if [ ! -d "$wallpapers_dir" ]; then
+    mkdir -p "$wallpapers_dir"
+    notify-send -i "$iDIR/wallpaper.png" "Info" "Created wallpapers directory: $wallpapers_dir"
+fi
+
+# Check if wallpapers directory has any images
+wallpapers_array=($(find "$wallpapers_dir" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) -exec basename {} \; | sort))
+
+if [ ${#wallpapers_array[@]} -eq 0 ]; then
+    notify-send -i "$iDIR/error.png" "Error" "No wallpapers found in $wallpapers_dir"
     exit 1
 fi
 
-themes_dir="$HOME/.oh-my-zsh/themes"
-file_extension=".zsh-theme"
-
-
-themes_array=($(find -L "$themes_dir" -type f -name "*$file_extension" -exec basename {} \; | sed -e "s/$file_extension//"))
-
-# Add "Random" option to the beginning of the array
-themes_array=("Random" "${themes_array[@]}")
-
-rofi_command="rofi -i -dmenu -config $rofi_theme"
+# Use default rofi theme if custom one doesn't exist
+if [ ! -f "$rofi_theme" ]; then
+    rofi_command="rofi -i -dmenu -p 'Select SDDM Wallpaper'"
+else
+    rofi_command="rofi -i -dmenu -config $rofi_theme -p 'Select SDDM Wallpaper'"
+fi
 
 menu() {
-    for theme in "${themes_array[@]}"; do
-        echo "$theme"
+    for wallpaper in "${wallpapers_array[@]}"; do
+        echo "$wallpaper"
     done
+}
+
+set_sddm_wallpaper() {
+    local wallpaper_path="$1"
+    local success=false
+    
+    # For sugar-candy theme
+    if [ -d "$sddm_theme_dir/sugar-candy" ]; then
+        if sudo cp "$wallpaper_path" "$sddm_theme_dir/sugar-candy/Background.jpg" 2>/dev/null; then
+            success=true
+        fi
+    fi
+    
+    # For other common SDDM themes
+    for theme_dir in "$sddm_theme_dir"/*; do
+        if [ -d "$theme_dir" ]; then
+            theme_name=$(basename "$theme_dir")
+            case "$theme_name" in
+                "breeze"|"elarun"|"maldives"|"maya")
+                    sudo cp "$wallpaper_path" "$theme_dir/background.jpg" 2>/dev/null && success=true
+                    ;;
+                "chili"|"clairvoyance")
+                    sudo cp "$wallpaper_path" "$theme_dir/assets/background.jpg" 2>/dev/null && success=true
+                    ;;
+                *)
+                    # Try common background file names
+                    for bg_file in "background.jpg" "background.png" "wallpaper.jpg" "wallpaper.png"; do
+                        if [ -f "$theme_dir/$bg_file" ]; then
+                            sudo cp "$wallpaper_path" "$theme_dir/$bg_file" 2>/dev/null && success=true
+                        fi
+                    done
+                    ;;
+            esac
+        fi
+    done
+    
+    return $success
 }
 
 main() {
     choice=$(menu | ${rofi_command})
     
-    # if nothing selected, script won't change anything
     if [ -z "$choice" ]; then
         exit 0
     fi
     
-    zsh_path="$HOME/.zshrc"
-    var_name="ZSH_THEME"
+    wallpaper_path="$wallpapers_dir/$choice"
     
-    if [[ "$choice" == "Random" ]]; then
-        # Pick a random theme from the original themes_array (excluding "Random")
-        random_theme=${themes_array[$((RANDOM % (${#themes_array[@]} - 1) + 1))]}
-        theme_to_set="$random_theme"
-        notify-send -i "$iDIR/shimarin.jpg" "Random theme:" "selected: $random_theme"
+    if [ -f "$wallpaper_path" ]; then
+        if set_sddm_wallpaper "$wallpaper_path"; then
+            notify-send -i "$iDIR/wallpaper.png" "SDDM Wallpaper" "Successfully set: $choice"
+        else
+            notify-send -i "$iDIR/error.png" "SDDM Wallpaper" "Failed to set wallpaper. Check permissions or SDDM theme."
+        fi
     else
-        # Set theme to the selected choice
-        theme_to_set="$choice"
-        notify-send -i "$iDIR/shimarin.jpg" "Theme selected:" "$choice"
-    fi
-    
-    if [ -f "$zsh_path" ]; then
-        sed -i "s/^$var_name=.*/$var_name=\"$theme_to_set\"/" "$zsh_path"
-        notify-send -i "$iDIR/shimarin.jpg" "OMZ theme" "applied. restart your terminal"
-    else
-        notify-send -i "$iDIR/error.png" "E-R-R-O-R" "~.zshrc file not found!"
+        notify-send -i "$iDIR/error.png" "Error" "Wallpaper file not found: $choice"
     fi
 }
 

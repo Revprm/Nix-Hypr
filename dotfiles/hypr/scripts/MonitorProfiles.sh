@@ -1,63 +1,88 @@
 #!/bin/bash
 # /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
-# Script for Oh my ZSH theme ( CTRL SHIFT O)
+# Script for switching between monitor configurations
 
-# preview of theme can be view here: https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# after choosing theme, TTY need to be closed and re-open
-
-# Variables
 iDIR="$HOME/.config/swaync/images"
-rofi_theme="$HOME/.config/rofi/config-zsh-theme.rasi"
+rofi_theme="$HOME/.config/rofi/config-monitor-profiles.rasi"
+profiles_dir="$HOME/.config/hypr/monitor-profiles"
 
-if [ -n "$(grep -i nixos < /etc/os-release)" ]; then
-    notify-send -i "$iDIR/note.png" "NOT Supported" "Sorry NixOS does not support this KooL feature"
+# Create profiles directory if it doesn't exist
+if [ ! -d "$profiles_dir" ]; then
+    mkdir -p "$profiles_dir"
+    
+    # Create some example profiles
+    cat > "$profiles_dir/laptop-only.conf" << 'EOF'
+# Laptop screen only
+monitor = eDP-1, 2880x1800@90, 0x0, 1
+monitor = , disable
+EOF
+
+    cat > "$profiles_dir/external-only.conf" << 'EOF'
+# External monitor only  
+monitor = DP-1, 1920x1080@165, 0x0, 1
+monitor = eDP-1, disable
+EOF
+
+    cat > "$profiles_dir/dual-monitor.conf" << 'EOF'
+# Dual monitor setup
+monitor = eDP-1, 2880x1800@90, 1920x0, 1.67
+monitor = DP-1, 1920x1080@165, 0x0, 1
+EOF
+
+    cat > "$profiles_dir/mirror.conf" << 'EOF'
+# Mirror displays
+monitor = eDP-1, 2880x1800@90, 0x0, 1
+monitor = DP-1, 2880x1800@90, 0x0, 1
+EOF
+    
+    notify-send -i "$iDIR/monitor.png" "Monitor Profiles" "Created example profiles"
+fi
+
+# Get available profiles
+profiles_array=($(find "$profiles_dir" -name "*.conf" -exec basename {} .conf \; | sort))
+
+if [ ${#profiles_array[@]} -eq 0 ]; then
+    notify-send -i "$iDIR/error.png" "Error" "No monitor profiles found"
     exit 1
 fi
 
-themes_dir="$HOME/.oh-my-zsh/themes"
-file_extension=".zsh-theme"
-
-
-themes_array=($(find -L "$themes_dir" -type f -name "*$file_extension" -exec basename {} \; | sed -e "s/$file_extension//"))
-
-# Add "Random" option to the beginning of the array
-themes_array=("Random" "${themes_array[@]}")
-
-rofi_command="rofi -i -dmenu -config $rofi_theme"
+# Use default rofi theme if custom one doesn't exist
+if [ ! -f "$rofi_theme" ]; then
+    rofi_command="rofi -i -dmenu"
+else
+    rofi_command="rofi -i -dmenu -config $rofi_theme"
+fi
 
 menu() {
-    for theme in "${themes_array[@]}"; do
-        echo "$theme"
+    for profile in "${profiles_array[@]}"; do
+        echo "$profile"
     done
 }
 
 main() {
     choice=$(menu | ${rofi_command})
     
-    # if nothing selected, script won't change anything
     if [ -z "$choice" ]; then
         exit 0
     fi
     
-    zsh_path="$HOME/.zshrc"
-    var_name="ZSH_THEME"
-    
-    if [[ "$choice" == "Random" ]]; then
-        # Pick a random theme from the original themes_array (excluding "Random")
-        random_theme=${themes_array[$((RANDOM % (${#themes_array[@]} - 1) + 1))]}
-        theme_to_set="$random_theme"
-        notify-send -i "$iDIR/shimarin.jpg" "Random theme:" "selected: $random_theme"
+    profile_file="$profiles_dir/$choice.conf"
+    if [ -f "$profile_file" ]; then
+        # Apply monitor configuration
+        while IFS= read -r line; do
+            # Skip comments and empty lines
+            if [[ $line =~ ^[[:space:]]*# ]] || [[ -z "${line// }" ]]; then
+                continue
+            fi
+            # Apply monitor configuration
+            if [[ $line =~ ^monitor ]]; then
+                hyprctl keyword "$line"
+            fi
+        done < "$profile_file"
+        
+        notify-send -i "$iDIR/monitor.png" "Monitor Profile" "Applied: $choice"
     else
-        # Set theme to the selected choice
-        theme_to_set="$choice"
-        notify-send -i "$iDIR/shimarin.jpg" "Theme selected:" "$choice"
-    fi
-    
-    if [ -f "$zsh_path" ]; then
-        sed -i "s/^$var_name=.*/$var_name=\"$theme_to_set\"/" "$zsh_path"
-        notify-send -i "$iDIR/shimarin.jpg" "OMZ theme" "applied. restart your terminal"
-    else
-        notify-send -i "$iDIR/error.png" "E-R-R-O-R" "~.zshrc file not found!"
+        notify-send -i "$iDIR/error.png" "Error" "Profile not found: $choice"
     fi
 }
 

@@ -1,69 +1,58 @@
 #!/bin/bash
 # /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
-# Script for Oh my ZSH theme ( CTRL SHIFT O)
+# Script for system updates - NixOS compatible
 
-# preview of theme can be view here: https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# after choosing theme, TTY need to be closed and re-open
-
-# Variables
 iDIR="$HOME/.config/swaync/images"
-rofi_theme="$HOME/.config/rofi/config-zsh-theme.rasi"
 
+# Function to run update in terminal
+run_update() {
+    local cmd="$1"
+    local title="$2"
+    
+    # Check for available terminals
+    if command -v kitty >/dev/null 2>&1; then
+        kitty --title "$title" sh -c "$cmd; read -p 'Press Enter to continue...'"
+    elif command -v alacritty >/dev/null 2>&1; then
+        alacritty --title "$title" -e sh -c "$cmd; read -p 'Press Enter to continue...'"
+    elif command -v gnome-terminal >/dev/null 2>&1; then
+        gnome-terminal --title="$title" -- sh -c "$cmd; read -p 'Press Enter to continue...'"
+    else
+        # Fallback - run without terminal
+        eval "$cmd"
+    fi
+}
+
+# Check if running NixOS
 if [ -n "$(grep -i nixos < /etc/os-release)" ]; then
-    notify-send -i "$iDIR/note.png" "NOT Supported" "Sorry NixOS does not support this KooL feature"
-    exit 1
-fi
-
-themes_dir="$HOME/.oh-my-zsh/themes"
-file_extension=".zsh-theme"
-
-
-themes_array=($(find -L "$themes_dir" -type f -name "*$file_extension" -exec basename {} \; | sed -e "s/$file_extension//"))
-
-# Add "Random" option to the beginning of the array
-themes_array=("Random" "${themes_array[@]}")
-
-rofi_command="rofi -i -dmenu -config $rofi_theme"
-
-menu() {
-    for theme in "${themes_array[@]}"; do
-        echo "$theme"
-    done
-}
-
-main() {
-    choice=$(menu | ${rofi_command})
+    notify-send -i "$iDIR/update.png" "System Update" "Starting NixOS update..."
     
-    # if nothing selected, script won't change anything
-    if [ -z "$choice" ]; then
-        exit 0
-    fi
-    
-    zsh_path="$HOME/.zshrc"
-    var_name="ZSH_THEME"
-    
-    if [[ "$choice" == "Random" ]]; then
-        # Pick a random theme from the original themes_array (excluding "Random")
-        random_theme=${themes_array[$((RANDOM % (${#themes_array[@]} - 1) + 1))]}
-        theme_to_set="$random_theme"
-        notify-send -i "$iDIR/shimarin.jpg" "Random theme:" "selected: $random_theme"
+    if command -v nixos-rebuild >/dev/null 2>&1; then
+        run_update "sudo nixos-rebuild switch --upgrade" "NixOS System Update"
+        notify-send -i "$iDIR/update.png" "System Update" "NixOS update completed"
     else
-        # Set theme to the selected choice
-        theme_to_set="$choice"
-        notify-send -i "$iDIR/shimarin.jpg" "Theme selected:" "$choice"
+        # Home Manager update
+        if command -v home-manager >/dev/null 2>&1; then
+            run_update "home-manager switch" "Home Manager Update"
+            notify-send -i "$iDIR/update.png" "System Update" "Home Manager updated"
+        else
+            notify-send -i "$iDIR/error.png" "Update Error" "No update method available"
+        fi
     fi
-    
-    if [ -f "$zsh_path" ]; then
-        sed -i "s/^$var_name=.*/$var_name=\"$theme_to_set\"/" "$zsh_path"
-        notify-send -i "$iDIR/shimarin.jpg" "OMZ theme" "applied. restart your terminal"
+else
+    # Non-NixOS systems
+    if command -v pacman >/dev/null 2>&1; then
+        # Arch Linux
+        run_update "sudo pacman -Syu" "Arch Linux Update"
+    elif command -v apt >/dev/null 2>&1; then
+        # Debian/Ubuntu
+        run_update "sudo apt update && sudo apt upgrade" "APT Update"
+    elif command -v dnf >/dev/null 2>&1; then
+        # Fedora
+        run_update "sudo dnf update" "DNF Update"
+    elif command -v zypper >/dev/null 2>&1; then
+        # openSUSE
+        run_update "sudo zypper up" "Zypper Update"
     else
-        notify-send -i "$iDIR/error.png" "E-R-R-O-R" "~.zshrc file not found!"
+        notify-send -i "$iDIR/error.png" "Update Error" "Unknown package manager"
     fi
-}
-
-# Check if rofi is already running
-if pidof rofi > /dev/null; then
-    pkill rofi
 fi
-
-main

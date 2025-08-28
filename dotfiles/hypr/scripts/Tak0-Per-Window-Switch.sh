@@ -1,64 +1,106 @@
 #!/bin/bash
 # /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
-# Script for Oh my ZSH theme ( CTRL SHIFT O)
+# Script for per-window opacity/transparency control
 
-# preview of theme can be view here: https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# after choosing theme, TTY need to be closed and re-open
-
-# Variables
 iDIR="$HOME/.config/swaync/images"
-rofi_theme="$HOME/.config/rofi/config-zsh-theme.rasi"
+rofi_theme="$HOME/.config/rofi/config-window-opacity.rasi"
 
-if [ -n "$(grep -i nixos < /etc/os-release)" ]; then
-    notify-send -i "$iDIR/note.png" "NOT Supported" "Sorry NixOS does not support this KooL feature"
-    exit 1
+# Get active window address
+get_active_window() {
+    hyprctl activewindow -j | jq -r '.address'
+}
+
+# Get window opacity
+get_window_opacity() {
+    local window_addr="$1"
+    hyprctl clients -j | jq -r ".[] | select(.address == \"$window_addr\") | .opacity"
+}
+
+# Opacity options
+opacity_options=(
+    "1.0 (Opaque)"
+    "0.9 (90%)"
+    "0.8 (80%)"
+    "0.7 (70%)"
+    "0.6 (60%)"
+    "0.5 (50%)"
+    "0.4 (40%)"
+    "0.3 (30%)"
+    "Reset to default"
+)
+
+# Use default rofi theme if custom one doesn't exist
+if [ ! -f "$rofi_theme" ]; then
+    rofi_command="rofi -i -dmenu -p 'Window Opacity'"
+else
+    rofi_command="rofi -i -dmenu -config $rofi_theme -p 'Window Opacity'"
 fi
 
-themes_dir="$HOME/.oh-my-zsh/themes"
-file_extension=".zsh-theme"
-
-
-themes_array=($(find -L "$themes_dir" -type f -name "*$file_extension" -exec basename {} \; | sed -e "s/$file_extension//"))
-
-# Add "Random" option to the beginning of the array
-themes_array=("Random" "${themes_array[@]}")
-
-rofi_command="rofi -i -dmenu -config $rofi_theme"
-
 menu() {
-    for theme in "${themes_array[@]}"; do
-        echo "$theme"
+    for option in "${opacity_options[@]}"; do
+        echo "$option"
     done
 }
 
 main() {
+    # Get active window
+    active_window=$(get_active_window)
+    
+    if [ "$active_window" = "null" ] || [ -z "$active_window" ]; then
+        notify-send -i "$iDIR/error.png" "Error" "No active window found"
+        exit 1
+    fi
+    
+    # Get current opacity
+    current_opacity=$(get_window_opacity "$active_window")
+    
+    # Show current opacity in notification
+    notify-send -i "$iDIR/window.png" "Current Window" "Opacity: ${current_opacity}"
+    
     choice=$(menu | ${rofi_command})
     
-    # if nothing selected, script won't change anything
     if [ -z "$choice" ]; then
         exit 0
     fi
     
-    zsh_path="$HOME/.zshrc"
-    var_name="ZSH_THEME"
-    
-    if [[ "$choice" == "Random" ]]; then
-        # Pick a random theme from the original themes_array (excluding "Random")
-        random_theme=${themes_array[$((RANDOM % (${#themes_array[@]} - 1) + 1))]}
-        theme_to_set="$random_theme"
-        notify-send -i "$iDIR/shimarin.jpg" "Random theme:" "selected: $random_theme"
-    else
-        # Set theme to the selected choice
-        theme_to_set="$choice"
-        notify-send -i "$iDIR/shimarin.jpg" "Theme selected:" "$choice"
-    fi
-    
-    if [ -f "$zsh_path" ]; then
-        sed -i "s/^$var_name=.*/$var_name=\"$theme_to_set\"/" "$zsh_path"
-        notify-send -i "$iDIR/shimarin.jpg" "OMZ theme" "applied. restart your terminal"
-    else
-        notify-send -i "$iDIR/error.png" "E-R-R-O-R" "~.zshrc file not found!"
-    fi
+    case "$choice" in
+        "1.0 (Opaque)")
+            hyprctl setprop address:"$active_window" alpha 1.0
+            notify-send -i "$iDIR/window.png" "Window Opacity" "Set to 100% (Opaque)"
+            ;;
+        "0.9 (90%)")
+            hyprctl setprop address:"$active_window" alpha 0.9
+            notify-send -i "$iDIR/window.png" "Window Opacity" "Set to 90%"
+            ;;
+        "0.8 (80%)")
+            hyprctl setprop address:"$active_window" alpha 0.8
+            notify-send -i "$iDIR/window.png" "Window Opacity" "Set to 80%"
+            ;;
+        "0.7 (70%)")
+            hyprctl setprop address:"$active_window" alpha 0.7
+            notify-send -i "$iDIR/window.png" "Window Opacity" "Set to 70%"
+            ;;
+        "0.6 (60%)")
+            hyprctl setprop address:"$active_window" alpha 0.6
+            notify-send -i "$iDIR/window.png" "Window Opacity" "Set to 60%"
+            ;;
+        "0.5 (50%)")
+            hyprctl setprop address:"$active_window" alpha 0.5
+            notify-send -i "$iDIR/window.png" "Window Opacity" "Set to 50%"
+            ;;
+        "0.4 (40%)")
+            hyprctl setprop address:"$active_window" alpha 0.4
+            notify-send -i "$iDIR/window.png" "Window Opacity" "Set to 40%"
+            ;;
+        "0.3 (30%)")
+            hyprctl setprop address:"$active_window" alpha 0.3
+            notify-send -i "$iDIR/window.png" "Window Opacity" "Set to 30%"
+            ;;
+        "Reset to default")
+            hyprctl setprop address:"$active_window" alpha 1.0
+            notify-send -i "$iDIR/window.png" "Window Opacity" "Reset to default"
+            ;;
+    esac
 }
 
 # Check if rofi is already running
