@@ -71,6 +71,9 @@ in {
     
     # IaC Tools
     terraform
+
+    # Java Development
+    jdk
     # Add Database if Needed (me personally uses docker for databases)
   ];
 }
