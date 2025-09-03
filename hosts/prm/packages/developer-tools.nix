@@ -33,7 +33,7 @@ in {
     pkg-config
     cdrtools
     torrential
-
+  
     # NodeJS Ecosystem
     nodejs
     nodePackages.npm
