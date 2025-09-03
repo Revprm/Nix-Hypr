@@ -60,7 +60,7 @@ window#waybar {
 .modules-right {
     background: transparent;
     border: 1px solid @border_color;
-    border-radius: 10px;
+    border-radius: 12px;
     margin: 2px 3px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
@@ -99,7 +99,7 @@ window#waybar {
     padding: 3px 8px;
     color: @fg_darker;
     background: transparent;
-    border-radius: 6px;
+    border-radius: 12px;
     margin: 0 1px;
     transition: color 0.3s ease;
     font-size: 14px;
@@ -263,7 +263,7 @@ window#waybar {
     font-size: 14px;
     font-weight: bold;
     transition: color 0.3s ease;
-    border-radius: 6px;
+    border-radius: 12px;
 }
 
 #custom-power:hover {
@@ -280,7 +280,7 @@ window#waybar {
 
 #tray>.active {
     background: transparent;
-    border-radius: 4px;
+    border-radius: 12px;
 }
 
 /* Remove hover effects for modules */
