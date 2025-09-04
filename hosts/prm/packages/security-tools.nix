@@ -38,6 +38,7 @@
     # Network Stuff
     gns3-gui
     gns3-server
+    dynamips
     (pkgs.ciscoPacketTracer8.override {
       packetTracerSource =
         "${inputs.packet-tracer-binaries}/Packet_Tracer822_amd64_signed.deb";

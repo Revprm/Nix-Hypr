@@ -124,6 +124,8 @@ in {
       font-awesome
       terminus_font
       victor-mono
+      corefonts
+      vistafonts
       #(nerdfonts.override {fonts = ["JetBrainsMono"];}) # stable banch
       nerd-fonts.jetbrains-mono # unstable
       nerd-fonts.fira-code # unstable
