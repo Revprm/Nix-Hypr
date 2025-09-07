@@ -58,6 +58,11 @@ in {
     fwupd.enable = true;
     upower.enable = true;
     gnome.gnome-keyring.enable = true;
+    suwayomi-server = {
+      enable = true;
+      openFirewall = true;
+      settings.server.port = 4567;
+    };
   };
 
   systemd.services.flatpak-repo = {

@@ -20,6 +20,14 @@ in {
         vdpauinfo
         libva
         libva-utils
+        vulkan-loader
+        vulkan-validation-layers
+        vulkan-extension-layer
+      ];
+      extraPackages32 = with pkgs.pkgsi686Linux; [
+        # 32-bit Vulkan support for games
+        vulkan-loader
+        vulkan-validation-layers
       ];
     };
 

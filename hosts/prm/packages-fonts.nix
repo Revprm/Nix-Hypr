@@ -97,9 +97,13 @@ in {
 
     mangohud
     protonup-qt
-    lutris
     bottles
     heroic
+    wineWowPackages.stable
+    winetricks
+    protobuf
+    vulkan-tools
+    glxinfo
 
     virt-manager
     virt-viewer

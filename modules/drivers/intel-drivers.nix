@@ -2,10 +2,8 @@
 
 { lib, pkgs, config, ... }:
 with lib;
-let
-  cfg = config.drivers.intel;
-in
-{
+let cfg = config.drivers.intel;
+in {
   options.drivers.intel = {
     enable = mkEnableOption "Enable Intel Graphics Drivers";
   };
@@ -21,7 +19,14 @@ in
         intel-media-driver
         libvdpau-va-gl
         libva
-			  libva-utils
+        libva-utils
+        vulkan-loader
+        vulkan-validation-layers
+        intel-compute-runtime
+      ];
+      extraPackages32 = with pkgs.pkgsi686Linux; [
+        vulkan-loader
+        vulkan-validation-layers
       ];
     };
   };

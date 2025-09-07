@@ -5,6 +5,7 @@
     # Anime & Manga
     ani-cli
     manga-tui
+    suwayomi-server
     spicetify-cli
   ];
 }
