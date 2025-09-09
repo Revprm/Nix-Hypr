@@ -1,0 +1,237 @@
+/* Tokyo Night - Enhanced & Compatible */
+@define-color bg0 #1a1b26;
+@define-color bg1 #16161e;
+@define-color bg2 #24283b;
+@define-color fg0 #c0caf5;
+@define-color fg1 #a9b1d6;
+@define-color red #f7768e;
+@define-color orange #ff9e64;
+@define-color yellow #e0af68;
+@define-color green #9ece6a;
+@define-color cyan #73daca;
+@define-color blue #7aa2f7;
+@define-color purple #bb9af7;
+@define-color magenta #c0caf5;
+
+* {
+    border: none;
+    border-radius: 10px;
+    font-family: 'JetBrains Mono Nerd Font', 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: bold;
+    min-height: 0;
+}
+
+window#waybar {
+    background: rgba(26, 27, 38, 0.95);
+    color: @fg0;
+    border-radius: 15px;
+    opacity: 0.95;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+    background: transparent;
+}
+
+/* Workspaces */
+#workspaces button {
+    padding: 2px 8px;
+    margin: 2px;
+    background: transparent;
+    color: @fg1;
+    transition: all 0.3s ease;
+}
+
+#workspaces button:hover {
+    background: @bg2;
+}
+
+#workspaces button.active {
+    color: @blue;
+    background: rgba(122, 162, 247, 0.2);
+}
+
+#workspaces button.urgent {
+    color: @red;
+    background: rgba(247, 118, 142, 0.2);
+}
+
+/* Base module styling */
+#window,
+#submap,
+#clock,
+#idle_inhibitor,
+#disk,
+#cpu,
+#memory,
+#temperature,
+#network,
+#bluetooth,
+#pulseaudio,
+#backlight,
+#battery,
+#tray,
+#custom-notification,
+#custom-power {
+    background: @bg1;
+    padding: 4px 12px;
+    margin: 3px;
+    color: @fg0;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+/* Hover effects */
+#window:hover,
+#clock:hover,
+#idle_inhibitor:hover,
+#disk:hover,
+#cpu:hover,
+#memory:hover,
+#temperature:hover,
+#network:hover,
+#bluetooth:hover,
+#pulseaudio:hover,
+#backlight:hover,
+#battery:hover {
+    background: @bg2;
+    border-color: rgba(122, 162, 247, 0.3);
+}
+
+/* Individual module colors */
+#window {
+    color: @cyan;
+}
+
+#submap {
+    color: @orange;
+    background: rgba(255, 158, 100, 0.2);
+}
+
+#clock {
+    color: @blue;
+    font-weight: bold;
+}
+
+#idle_inhibitor {
+    color: @yellow;
+}
+
+#idle_inhibitor.activated {
+    color: @orange;
+    background: rgba(255, 158, 100, 0.2);
+}
+
+#disk {
+    color: @purple;
+}
+
+#cpu {
+    color: @green;
+}
+
+#memory {
+    color: @purple;
+}
+
+#temperature {
+    color: @cyan;
+}
+
+#temperature.critical {
+    color: @red;
+    background: rgba(247, 118, 142, 0.2);
+}
+
+#network {
+    color: @blue;
+}
+
+#network.disconnected {
+    color: @red;
+}
+
+#bluetooth {
+    color: @blue;
+}
+
+#bluetooth.disabled {
+    color: @fg1;
+}
+
+#bluetooth.connected {
+    color: @cyan;
+    background: rgba(115, 218, 202, 0.1);
+}
+
+#pulseaudio {
+    color: @green;
+}
+
+#pulseaudio.muted {
+    color: @red;
+    background: rgba(247, 118, 142, 0.1);
+}
+
+#backlight {
+    color: @yellow;
+}
+
+#battery {
+    color: @green;
+}
+
+#battery.charging {
+    color: @cyan;
+    background: rgba(115, 218, 202, 0.1);
+}
+
+#battery.warning:not(.charging) {
+    color: @orange;
+    background: rgba(255, 158, 100, 0.1);
+}
+
+#battery.critical:not(.charging) {
+    color: @red;
+    background: rgba(247, 118, 142, 0.2);
+}
+
+#custom-notification {
+    color: @purple;
+}
+
+#custom-power {
+    color: @red;
+    transition: all 0.3s ease;
+}
+
+#custom-power:hover {
+    background: @red;
+    color: @bg0;
+}
+
+/* Tray */
+#tray>.passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray>.needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: @red;
+}
+
+/* Tooltip styling */
+tooltip {
+    background: @bg0;
+    color: @fg0;
+    border: 1px solid @bg2;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+tooltip label {
+    color: @fg0;
+}

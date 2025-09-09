@@ -11,8 +11,9 @@
 
 * {
     border: none;
-    border-radius: 10px;
-    font-family: 'JetBrains Mono', monospace;
+    border-radius: 12px;
+    /* This is the corrected line */
+    font-family: "JetBrainsMono Nerd Font", monospace;
     font-size: 13px;
     font-weight: bold;
     min-height: 0;
@@ -21,7 +22,7 @@
 window#waybar {
     background: @bg0;
     color: @fg0;
-    border-radius: 15px;
+    border-radius: 12px;
     opacity: 0.95;
 }
 
@@ -34,16 +35,19 @@ window#waybar {
 #workspaces button {
     padding: 2px 8px;
     margin: 2px;
+    border-radius: 12px;
     background: transparent;
     color: @fg1;
 }
 
 #workspaces button:hover {
-    background: @bg2;
+    color: @blue;
 }
 
 #workspaces button.active {
     color: @blue;
+    text-shadow: 0 0 8px @blue;
+    font-weight: bold;
 }
 
 #window,
@@ -60,16 +64,33 @@ window#waybar {
     padding: 4px 12px;
     margin: 3px;
     color: @fg0;
+    transition: color 0.3s ease;
 }
 
-#cpu { color: @green; }
-#memory { color: @purple; }
-#battery.charging { color: @green; }
-#battery.critical:not(.charging) { color: @red; }
-#pulseaudio.muted { color: @red; }
-#network.disconnected { color: @red; }
+#cpu {
+    color: @green;
+}
+
+#memory {
+    color: @purple;
+}
+
+#battery.charging {
+    color: @green;
+}
+
+#battery.critical:not(.charging) {
+    color: @red;
+}
+
+#pulseaudio.muted {
+    color: @red;
+}
+
+#network.disconnected {
+    color: @red;
+}
 
 #custom-power:hover {
-    background: @red;
-    color: @bg0;
+    color: @red;
 }
