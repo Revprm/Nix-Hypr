@@ -1,55 +1,67 @@
-/* Tokyo Night - Minimal & Rounded */
+/* Tokyo Night - Enhanced Waybar with Separators */
 @define-color bg0 #1a1b26;
 @define-color bg1 #16161e;
 @define-color bg2 #24283b;
 @define-color fg0 #c0caf5;
 @define-color fg1 #a9b1d6;
 @define-color red #f7768e;
+@define-color yellow #e0af68;
 @define-color green #9ece6a;
+@define-color cyan #7dcfff;
 @define-color blue #7aa2f7;
 @define-color purple #bb9af7;
+@define-color pink #f285b9;
 
+/* General */
 * {
     border: none;
-    border-radius: 12px;
-    /* This is the corrected line */
+    border-radius: 10px;
     font-family: "JetBrainsMono Nerd Font", monospace;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: bold;
     min-height: 0;
 }
 
 window#waybar {
-    background: @bg0;
+    background: linear-gradient(180deg, @bg1 0%, @bg0 100%);
     color: @fg0;
     border-radius: 12px;
     opacity: 0.95;
+    transition: background 0.3s ease;
 }
 
-.modules-left,
-.modules-center,
-.modules-right {
+#workspaces {
+    margin: 0 6px;
+    padding: 0;
     background: transparent;
 }
 
 #workspaces button {
-    padding: 2px 8px;
-    margin: 2px;
-    border-radius: 12px;
+    padding: 0 6px;
+    margin: 0 4px;
     background: transparent;
+    border: none;
     color: @fg1;
+    font-weight: normal;
+    transition: color 0.25s ease;
 }
 
 #workspaces button:hover {
-    color: @blue;
+    color: @cyan; /* hover = cyan */
 }
 
 #workspaces button.active {
-    color: @blue;
-    text-shadow: 0 0 8px @blue;
+    color: @blue; /* active = blue */
     font-weight: bold;
+    text-shadow: 0 0 6px rgba(122, 162, 247, 0.6);
 }
 
+#workspaces button.urgent {
+    color: @red; /* urgent = red */
+    text-shadow: 0 0 6px rgba(247, 118, 142, 0.7);
+}
+
+/* Modules */
 #window,
 #clock,
 #cpu,
@@ -61,36 +73,64 @@ window#waybar {
 #tray,
 #custom-power {
     background: @bg1;
-    padding: 4px 12px;
+    padding: 5px 12px;
     margin: 3px;
     color: @fg0;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    border-right: 1px solid @bg2; /* Separator */
 }
 
-#cpu {
-    color: @green;
+/* Remove separator from last module in each section */
+.modules-left > widget:last-child > * ,
+.modules-center > widget:last-child > * ,
+.modules-right > widget:last-child > * {
+    border-right: none;
 }
 
-#memory {
-    color: @purple;
-}
+/* CPU & Memory */
+#cpu { color: @green; }
+#memory { color: @purple; }
+#temperature { color: @yellow; }
 
+/* Battery */
+#battery { color: @cyan; }
 #battery.charging {
     color: @green;
+    box-shadow: 0 0 6px @green;
 }
-
 #battery.critical:not(.charging) {
     color: @red;
+    box-shadow: 0 0 6px @red;
 }
 
+/* Audio */
+#pulseaudio { color: @pink; }
 #pulseaudio.muted {
     color: @red;
+    opacity: 0.8;
 }
 
+/* Network */
+#network { color: @blue; }
 #network.disconnected {
     color: @red;
+    opacity: 0.9;
 }
 
+/* Clock */
+#clock {
+    color: @fg0;
+    font-weight: bold;
+}
+
+/* Power */
 #custom-power:hover {
-    color: @red;
+    background: @red;
+    color: @bg0;
+    box-shadow: 0 0 6px @red;
+}
+
+/* System Tray */
+#tray {
+    padding: 5px 10px;
 }
