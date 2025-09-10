@@ -50,5 +50,6 @@
     autopsy
     bulk_extractor
     oletools
+    testdisk
   ];
 }
