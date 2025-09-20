@@ -74,6 +74,7 @@ in {
 
     # Java Development
     jdk
+    corretto21
     # Add Database if Needed (me personally uses docker for databases)
   ];
 }

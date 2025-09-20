@@ -40,6 +40,7 @@ in {
   hardware = {
     logitech.wireless.enable = false;
     logitech.wireless.enableGraphical = false;
+    opentabletdriver.enable = true;
     bluetooth = {
       enable = true;
       powerOnBoot = false;

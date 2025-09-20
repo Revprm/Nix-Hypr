@@ -5,5 +5,6 @@
     [
       # Games
       osu-lazer-bin
+      opentabletdriver
     ];
 }
