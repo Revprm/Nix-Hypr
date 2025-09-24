@@ -59,7 +59,6 @@ in {
     delve
 
     # Documents
-    libreoffice
     obsidian
     pandoc
     typst
